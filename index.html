@@ -640,6 +640,7 @@ async function render(){
     case 'progresspage': app.innerHTML = pageProgress(); break;
     case 'certificate': app.innerHTML = pageCertificate(); break;
     case 'readiness': app.innerHTML = pageReadiness(); break;
+    case 'payment': app.innerHTML = await pagePayment(State.params); break;
     case 'admin': app.innerHTML = await pageAdmin(); break;
     case 'search': app.innerHTML = pageSearch(State.params.q||''); break;
     default: app.innerHTML = await pageHome();
@@ -814,7 +815,231 @@ App.doLogin = async function(){
   toast('Welcome back, '+u.name+'!');
   App.nav('dashboard');
 };
+/* ---------------- PAYMENT ---------------- */
 
+async function pagePayment(params = {}) {
+  const plan = params.plan || 'plus';
+  const amount = params.amount || (plan === 'pro' ? '₱199' : '₱99');
+  const course = params.course || '';
+
+  if (!State.user) {
+    return `
+      <div class="container section">
+        <div class="card" style="max-width:650px;margin:40px auto;text-align:center;">
+          <h2>Please log in first</h2>
+          <p class="muted">You need an ADOT account before submitting a payment.</p>
+          <button class="btn btn-primary"
+            onclick="App.nav('login')">
+            Log In
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  let paymentMethods = [];
+
+  try {
+    const { data, error } = await adotSupabase
+      .from('payment_methods')
+      .select('*')
+      .eq('enabled', true)
+      .order('id');
+
+    if (!error && data) {
+      paymentMethods = data;
+    }
+  } catch (error) {
+    console.error('Payment methods loading failed:', error);
+  }
+
+  const methodOptions = paymentMethods.length
+    ? paymentMethods.map(m => `
+        <option value="${escapeHtml(m.name)}">
+          ${escapeHtml(m.name)}
+        </option>
+      `).join('')
+    : `<option value="">No payment method available</option>`;
+
+  return `
+    <div class="container section">
+      <span class="eyebrow-tag">ADOT Payment</span>
+
+      <div class="card" style="max-width:700px;margin:24px auto;">
+        <h2>Unlock ${plan.toUpperCase()}</h2>
+
+        <p class="muted">
+          You're unlocking:
+          <strong>${escapeHtml(course)}</strong>
+        </p>
+
+        <div style="font-size:30px;font-weight:700;margin:20px 0;">
+          ${amount}
+        </div>
+
+        <hr style="margin:24px 0;opacity:.2;">
+
+        <h3>Payment Instructions</h3>
+
+        <div id="paymentMethodDetails"
+          style="margin:15px 0;padding:16px;background:#f6f7f9;border-radius:10px;">
+          Select a payment method below.
+        </div>
+
+        <label class="small">Payment Method</label>
+
+        <select id="paymentMethod"
+          class="input"
+          style="width:100%;margin:6px 0 18px;"
+          onchange="showPaymentMethodDetails()">
+          ${methodOptions}
+        </select>
+
+        <label class="small">Reference Number</label>
+
+        <input
+          id="paymentReference"
+          class="input"
+          type="text"
+          placeholder="Enter your GCash/Maya reference number"
+          style="width:100%;margin:6px 0 18px;"
+        >
+
+        <label class="small">Proof of Payment</label>
+
+        <input
+          id="paymentProof"
+          class="input"
+          type="text"
+          placeholder="Paste your proof-of-payment image link"
+          style="width:100%;margin:6px 0 18px;"
+        >
+
+        <p class="small muted">
+          After submitting, your payment will be reviewed by ADOT.
+          Your course will be unlocked after approval.
+        </p>
+
+        <div id="paymentMsg"
+          class="small"
+          style="margin:12px 0;"></div>
+
+        <button
+          class="btn btn-primary"
+          onclick="submitPayment('${plan}','${amount.replace(/'/g,"&#39;")}','${escapeHtml(course).replace(/'/g,"&#39;")}')">
+          Submit Payment
+        </button>
+
+        <button
+          class="btn btn-sm"
+          style="margin-left:8px;"
+          onclick="App.nav('courses')">
+          Back to Courses
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+window.showPaymentMethodDetails = async function() {
+  const select = document.getElementById('paymentMethod');
+  const box = document.getElementById('paymentMethodDetails');
+
+  if (!select || !box || !select.value) return;
+
+  const { data, error } = await adotSupabase
+    .from('payment_methods')
+    .select('*')
+    .eq('name', select.value)
+    .eq('enabled', true)
+    .maybeSingle();
+
+  if (error || !data) {
+    box.textContent = 'Payment instructions are currently unavailable.';
+    return;
+  }
+
+  box.innerHTML = `
+    <strong>${escapeHtml(data.name)}</strong>
+
+    ${data.account_name ? `
+      <div style="margin-top:8px;">
+        Account Name: ${escapeHtml(data.account_name)}
+      </div>
+    ` : ''}
+
+    ${data.account_number ? `
+      <div>
+        Account Number: ${escapeHtml(data.account_number)}
+      </div>
+    ` : ''}
+
+    ${data.instructions ? `
+      <div style="margin-top:8px;">
+        ${escapeHtml(data.instructions)}
+      </div>
+    ` : ''}
+  `;
+};
+
+window.submitPayment = async function(plan, amount, course) {
+  const msg = document.getElementById('paymentMsg');
+  const method = document.getElementById('paymentMethod')?.value;
+  const reference = document.getElementById('paymentReference')?.value.trim();
+  const proof = document.getElementById('paymentProof')?.value.trim();
+
+  if (!method) {
+    msg.textContent = 'Please select a payment method.';
+    return;
+  }
+
+  if (!reference) {
+    msg.textContent = 'Please enter your payment reference number.';
+    return;
+  }
+
+  if (!proof) {
+    msg.textContent = 'Please provide your proof of payment.';
+    return;
+  }
+
+  if (!State.user?.id) {
+    msg.textContent = 'Please log in again before submitting your payment.';
+    return;
+  }
+
+  msg.textContent = 'Submitting payment...';
+
+  const numericAmount = Number(
+    String(amount).replace(/[₱,]/g, '')
+  );
+
+  const { error } = await adotSupabase
+    .from('payments')
+    .insert({
+      user_id: State.user.id,
+      package: plan,
+      amount: numericAmount,
+      payment_method: method,
+      reference_number: reference,
+      proof_file: proof,
+      status: 'pending'
+    });
+
+  if (error) {
+    console.error(error);
+    msg.textContent = error.message;
+    return;
+  }
+
+  msg.innerHTML = `
+    <strong>Payment submitted successfully.</strong><br>
+    Your payment is now pending admin approval.
+  `;
+
+  document.getElementById('paymentReference').value = '';
+  document.getElementById('paymentProof').value = '';
+};
 /* ---------------- DASHBOARD ---------------- */
 function pageDashboard(){
   const p = State.progress;
@@ -920,7 +1145,7 @@ function pageCourseCatalog(){
                 ${pct>0 ? 'Continue' : 'Start Course'}
               </button>`
             : `<button class="btn btn-primary btn-sm" style="margin-top:8px;"
-                onclick="alert('This course is part of ADOT ${planLabel} and costs ${price}. Payment and unlocking will be available soon.')">
+                onclick="App.nav('payment',{plan:'${access}',amount:'${price}',course:'${c.title}'})"
                 Unlock for ${price}
               </button>`
           }
