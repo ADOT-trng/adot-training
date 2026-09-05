@@ -2110,11 +2110,12 @@ init();
       }
 
       State.user = {
-        name: newProfile.first_name + ' ' + newProfile.last_name,
-        email: user.email,
-        id: user.id,
-        plan: newProfile.plan
-      };
+  name: newProfile.first_name + ' ' + newProfile.last_name,
+  email: user.email,
+  id: user.id,
+  plan: newProfile.plan,
+  role: newProfile.role
+};
 
       localStorage.removeItem('adot_pending_profile');
 
