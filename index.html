@@ -981,7 +981,7 @@ window.showPaymentMethodDetails = async function() {
     ` : ''}
   `;
 };
-
+setTimeout(showPaymentMethodDetails, 0);
 window.submitPayment = async function(plan, amount, course) {
   const msg = document.getElementById('paymentMsg');
   const method = document.getElementById('paymentMethod')?.value;
