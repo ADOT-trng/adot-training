@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call Center Training Academy — Learn. Practice. Get Hired.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10233B;
+  --ink-soft:#1B3A5C;
+  --paper:#FBF8F3;
+  --paper-dim:#F1ECE1;
+  --card:#FFFFFF;
+  --gold:#D9932E;
+  --gold-soft:#F3D9A6;
+  --teal:#177C74;
+  --teal-soft:#DCEEEC;
+  --coral:#C74A34;
+  --coral-soft:#F6DCD5;
+  --slate:#5B6B7A;
+  --line:#E1D9C8;
+  --radius-s:6px;
+  --radius-m:12px;
+  --shadow:0 1px 2px rgba(16,35,59,.06);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;color:var(--ink);line-height:1.15;margin:0 0 .5em;}
+p{margin:0 0 1em;color:var(--ink);}
+a{color:inherit;}
+img{max-width:100%;}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1120px;margin:0 auto;padding:0 24px;}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;}}
+
+/* ---------- NAV ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);}
+.topbar-inner{max-width:1120px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px;}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;white-space:nowrap;cursor:pointer;border:none;background:none;color:var(--ink);}
+.brand-mark{width:30px;height:30px;border-radius:50%;background:var(--ink);position:relative;flex:none;}
+.brand-mark::after{content:"";position:absolute;left:8px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--gold);}
+.navlinks{display:flex;gap:4px;flex:1;flex-wrap:wrap;}
+.navlinks button{background:none;border:none;padding:8px 10px;border-radius:var(--radius-s);font-size:.88rem;color:var(--ink-soft);font-weight:500;}
+.navlinks button:hover,.navlinks button.active{background:var(--paper-dim);color:var(--ink);}
+.nav-search{display:flex;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;gap:6px;min-width:0;}
+.nav-search input{border:none;outline:none;font-size:.85rem;width:120px;background:none;color:var(--ink);}
+.nav-actions{display:flex;gap:8px;align-items:center;}
+@media (max-width:900px){.navlinks{display:none;}.nav-search input{width:80px;}}
+
+/* ---------- BUTTONS ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:.92rem;border:1px solid transparent;text-decoration:none;transition:transform .12s ease;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--ink);color:#fff;}
+.btn-primary:hover{background:var(--ink-soft);}
+.btn-gold{background:var(--gold);color:#2A1B04;}
+.btn-gold:hover{background:#c9852a;}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--ink);}
+.btn-outline:hover{background:var(--ink);color:#fff;}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:#136259;}
+.btn-ghost{background:transparent;border:none;color:var(--ink-soft);padding:8px 12px;}
+.btn-sm{padding:8px 14px;font-size:.82rem;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.btn-block{width:100%;}
+
+/* ---------- LAYOUT HELPERS ---------- */
+.section{padding:72px 0;}
+.section-tight{padding:40px 0;}
+.grid{display:grid;gap:20px;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+@media (max-width:820px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-m);padding:24px;box-shadow:var(--shadow);}
+.eyebrow-tag{display:inline-block;font-size:.78rem;font-weight:600;color:var(--teal);background:var(--teal-soft);padding:4px 12px;border-radius:999px;margin-bottom:14px;}
+.muted{color:var(--slate);}
+.small{font-size:.85rem;}
+.center{text-align:center;}
+.divider{height:1px;background:var(--line);border:none;margin:32px 0;}
+
+/* ---------- PROGRESS BARS ---------- */
+.pbar-row{margin-bottom:16px;}
+.pbar-label{display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:6px;font-weight:600;}
+.pbar-track{height:10px;border-radius:999px;background:var(--paper-dim);overflow:hidden;}
+.pbar-fill{height:100%;border-radius:999px;background:var(--teal);}
+.pbar-fill.gold{background:var(--gold);}
+
+/* ---------- BADGES ---------- */
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;}
+.badge-chip{display:flex;align-items:center;gap:8px;background:var(--gold-soft);border:1px solid var(--gold);color:#5a3d0a;padding:8px 14px;border-radius:999px;font-size:.82rem;font-weight:600;}
+.badge-chip.locked{background:var(--paper-dim);border-color:var(--line);color:var(--slate);opacity:.7;}
+
+/* ---------- HERO ---------- */
+.hero{padding:56px 0 72px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+.hero h1{font-size:clamp(2.1rem,4.4vw,3.2rem);letter-spacing:-.01em;}
+.hero-sub{font-size:1.08rem;color:var(--ink-soft);max-width:46ch;}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+.callcard{background:var(--ink);color:#fff;border-radius:var(--radius-m);padding:22px;font-size:.9rem;}
+.callcard .line{display:flex;gap:10px;margin-bottom:14px;}
+.callcard .who{font-weight:700;color:var(--gold);flex:none;width:64px;font-size:.8rem;}
+.callcard .txt{color:#E7ECF1;}
+.callcard-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;border-top:1px solid rgba(255,255,255,.15);padding-top:14px;}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:#5FD3A0;display:inline-block;margin-right:6px;}
+
+/* ---------- COURSE CARD ---------- */
+.course-card{border-left:4px solid var(--teal);padding-left:20px;}
+.course-card h3{margin-bottom:6px;}
+.lesson-count{font-size:.8rem;color:var(--slate);}
+
+/* ---------- FAQ ---------- */
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:18px 0;font-weight:600;font-size:1rem;display:flex;justify-content:space-between;color:var(--ink);}
+.faq-a{padding:0 0 18px;color:var(--slate);display:none;}
+.faq-item.open .faq-a{display:block;}
+
+/* ---------- APP LAYOUT (dashboard/courses) ---------- */
+.app-shell{display:grid;grid-template-columns:250px 1fr;gap:28px;align-items:start;}
+@media (max-width:860px){.app-shell{grid-template-columns:1fr;}}
+.side-nav{position:sticky;top:80px;display:flex;flex-direction:column;gap:2px;}
+.side-nav button{text-align:left;background:none;border:none;padding:10px 14px;border-radius:var(--radius-s);color:var(--ink-soft);font-size:.9rem;font-weight:500;}
+.side-nav button.active,.side-nav button:hover{background:var(--paper-dim);color:var(--ink);}
+
+/* ---------- LESSON ---------- */
+.lesson-nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--radius-s);font-size:.86rem;cursor:pointer;color:var(--ink-soft);}
+.lesson-nav-item.active{background:var(--teal-soft);color:var(--teal);font-weight:600;}
+.lesson-nav-item .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);flex:none;}
+.lesson-nav-item.done .dot{background:var(--teal);border-color:var(--teal);}
+.tip-box{background:var(--teal-soft);border-left:4px solid var(--teal);padding:14px 16px;border-radius:var(--radius-s);font-size:.9rem;margin:18px 0;}
+.dialogue{background:var(--paper-dim);border-radius:var(--radius-s);padding:16px 18px;margin:16px 0;}
+.dialogue .who{font-weight:700;font-family:'Space Grotesk',sans-serif;font-size:.82rem;color:var(--teal);}
+
+/* ---------- QUIZ ---------- */
+.quiz-q{margin-bottom:22px;}
+.quiz-opt{display:block;width:100%;text-align:left;padding:12px 16px;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--card);margin-bottom:8px;font-size:.92rem;}
+.quiz-opt:hover{border-color:var(--teal);}
+.quiz-opt.selected{border-color:var(--ink);background:var(--paper-dim);}
+.quiz-opt.correct{border-color:var(--teal);background:var(--teal-soft);}
+.quiz-opt.wrong{border-color:var(--coral);background:var(--coral-soft);}
+.quiz-explain{font-size:.86rem;color:var(--slate);margin-top:6px;padding-left:4px;}
+.result-banner{padding:20px;border-radius:var(--radius-m);margin-bottom:24px;font-weight:600;}
+.result-banner.pass{background:var(--teal-soft);color:#0c5a53;}
+.result-banner.fail{background:var(--coral-soft);color:#7c2d1c;}
+
+/* ---------- TABLE / MISC ---------- */
+.tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--paper-dim);color:var(--ink-soft);margin-right:6px;}
+.tag.beg{background:var(--teal-soft);color:#0c5a53;}
+.tag.int{background:var(--gold-soft);color:#6a4a0c;}
+.tag.adv{background:var(--coral-soft);color:#7c2d1c;}
+input[type=text],input[type=email],input[type=password],textarea,select{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:var(--radius-s);font-family:inherit;font-size:.92rem;background:var(--card);color:var(--ink);}
+label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:var(--ink-soft);}
+.field{margin-bottom:16px;}
+.readiness-ring{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;flex:none;}
+.vocab-card{border-bottom:1px solid var(--line);padding:16px 0;}
+.vocab-term{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--ink);}
+.searchbox-page{max-width:520px;}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--ink);color:#fff;padding:14px 20px;border-radius:var(--radius-s);font-size:.9rem;z-index:200;box-shadow:0 6px 20px rgba(0,0,0,.2);max-width:320px;}
+.certificate{border:6px double var(--gold);padding:48px;text-align:center;background:#fff;}
+.certificate h1{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;letter-spacing:.03em;}
+.certificate .name{font-size:2.1rem;margin:18px 0;font-family:'Space Grotesk',sans-serif;color:var(--teal);}
+footer{background:var(--ink);color:#C9D3DD;padding:48px 0 28px;margin-top:40px;}
+footer a{color:#C9D3DD;text-decoration:none;}
+footer h4{color:#fff;font-size:.9rem;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px;margin-bottom:28px;}
+@media (max-width:700px){.foot-grid{grid-template-columns:1fr 1fr;}}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:20px;font-size:.8rem;color:#93A2B2;}
+.announce{background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-s);padding:12px 16px;font-size:.88rem;margin-bottom:18px;}
+.empty{color:var(--slate);font-style:italic;padding:20px 0;}
+@media print{.topbar,footer,.no-print{display:none!important;} body{background:#fff;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="brand" onclick="App.nav('home')"><span class="brand-mark"></span> Call Center Training Academy</button>
+    <div class="navlinks" id="navlinks"></div>
+    <div class="nav-search">
+      <span aria-hidden="true">🔎</span>
+      <input id="navSearchInput" type="text" placeholder="Search lessons, terms, questions…" onkeydown="if(event.key==='Enter')App.runSearch(this.value)">
+    </div>
+    <div class="nav-actions" id="navActions"></div>
+  </div>
+</div>
+<div id="app"></div>
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <h4 style="font-family:'Space Grotesk',sans-serif;font-size:1.05rem;">Call Center Training Academy</h4>
+        <p class="small" style="max-width:34ch;">A free, self-paced training platform helping Filipino learners build the skills, confidence, and readiness to land a call center or BPO job.</p>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <p class="small"><a href="#" onclick="App.nav('courses');return false;">Courses</a></p>
+        <p class="small"><a href="#" onclick="App.nav('vocabulary');return false;">Vocabulary</a></p>
+        <p class="small"><a href="#" onclick="App.nav('resume');return false;">Resume Prep</a></p>
+      </div>
+      <div>
+        <h4>Get Hired</h4>
+        <p class="small"><a href="#" onclick="App.nav('assessments');return false;">Assessments</a></p>
+        <p class="small"><a href="#" onclick="App.nav('interviewprep');return false;">Interview Prep</a></p>
+        <p class="small"><a href="#" onclick="App.nav('readiness');return false;">Am I Ready?</a></p>
+      </div>
+      <div>
+        <h4>Account</h4>
+        <p class="small"><a href="#" onclick="App.nav('dashboard');return false;">Dashboard</a></p>
+        <p class="small"><a href="#" onclick="App.nav('admin');return false;">Trainer Login</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Call Center Training Academy. Free training for aspiring BPO professionals. This platform is a training tool and does not guarantee employment.</div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   DATA
+===================================================================== */
+const COURSES = [
+{id:'c1', title:'Introduction to the Call Center Industry', blurb:'Understand what a call center is, how BPO works, and where you could fit in.', level:'Foundation',
+  lessons:[
+    {t:'What is a Call Center?', c:'A call center is a team of agents who talk with customers over the phone (or chat) to answer questions, solve problems, or sell products. Companies set up call centers so customers always have someone to reach when they need help.', check:{q:'What is the main purpose of a call center?', o:['To manufacture products','To help customers by phone or chat','To design company logos','To manage office buildings'], a:1, e:'Call centers exist to connect customers with support, sales, or service — usually by phone or chat.'}},
+    {t:'What is BPO?', c:'BPO stands for Business Process Outsourcing. It means a company hires another company to handle a specific task — like customer support, accounting, or IT — instead of doing it themselves. A call center is one common type of BPO service.', check:{q:'BPO stands for:', o:['Basic Phone Operations','Business Process Outsourcing','Branch Product Office','Best Practice Organization'], a:1, e:'BPO = Business Process Outsourcing, where a business task is handled by another company.'}},
+    {t:'Types of Call Centers', c:'There are inbound call centers (customers call in), outbound call centers (agents call customers), and blended call centers (a mix of both). Knowing the type helps you understand what your daily tasks would look like.', check:{q:'A call center where agents call customers is called:', o:['Inbound','Outbound','Blended','Non-voice'], a:1, e:'Outbound call centers have agents making calls, often for sales or surveys.'}},
+    {t:'Inbound vs. Outbound Calls', c:'Inbound calls come from customers reaching out for help, billing questions, or complaints. Outbound calls are made by the agent, often for sales, collections, appointment setting, or surveys. Each requires a slightly different mindset and pacing.', check:{q:'A customer calling to ask about their bill is an example of:', o:['An outbound call','An inbound call','A non-voice ticket','A supervisor escalation'], a:1, e:'The customer initiated the call, so it is inbound.'}},
+    {t:'Voice vs. Non-Voice Accounts', c:'Voice accounts involve talking to customers on the phone. Non-voice accounts handle support through chat, email, or social media instead of speaking. Both need strong communication — voice needs strong speaking skills, non-voice needs strong writing skills.', check:{q:'Answering customers through live chat is an example of:', o:['A voice account','A non-voice account','An outbound account','A trainer role'], a:1, e:'Chat support does not require speaking, so it is a non-voice account.'}},
+    {t:'Common Call Center Terms', c:'The industry uses many short terms like AHT (Average Handle Time), QA (Quality Assurance), and CSAT (Customer Satisfaction). Learning this vocabulary early will help you understand training, feedback, and job postings. Visit the Vocabulary section any time to look these up.', check:{q:'Where can you look up call center terms on this platform?', o:['The Resume section','The Vocabulary Glossary','The Certificate page','The Admin panel'], a:1, e:'The Vocabulary Glossary is built for exactly this purpose.'}},
+    {t:'Call Center Roles', c:'A typical team includes Agents (handle customers directly), Team Leaders (coach agents), Quality Analysts (review call quality), and Trainers (teach new hires). Knowing these roles helps you see a career path beyond your first job.', check:{q:'Who reviews calls to check quality and give feedback?', o:['The Trainer','The Quality Analyst (QA)','The Recruiter','The IT Support team'], a:1, e:'Quality Analysts listen to or review interactions and score them against a quality standard.'}},
+    {t:'What Employers Look For', c:'Employers want clear communication, a positive attitude, basic computer skills, reliability, and the ability to stay calm under pressure. You do not need to be perfect in English — you need to be clear, patient, and coachable.', check:{q:'Which trait matters most to call center employers?', o:['A university degree in IT','Clear communication and a positive attitude','Five years of experience','Fluency in three languages'], a:1, e:'Most entry-level hiring focuses on communication, attitude, and coachability rather than experience.'}},
+    {t:'Career Opportunities in the BPO Industry', c:'Many Team Leaders, Trainers, Quality Analysts, and even Operations Managers started as agents. The BPO industry in the Philippines offers real growth if you keep learning and performing well. This academy is your first step on that path.', check:{q:'Career growth in BPO usually starts from:', o:['A management position','An agent role','A sales director role','An IT engineer role'], a:1, e:'Most leaders in this industry began as frontline agents.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'What does BPO stand for?', o:['Business Process Outsourcing','Basic Product Operations','Branch Personnel Office','Business Phone Operator'], a:0, e:'BPO = Business Process Outsourcing.'},
+    {q:'Inbound calls are calls that:', o:['Agents make to customers','Customers make to the company','Are automated only','Never require an agent'], a:1, e:'Inbound means the customer initiates contact.'},
+    {q:'A non-voice account typically involves:', o:['Phone calls only','Chat or email support','Door-to-door sales','Warehouse work'], a:1, e:'Non-voice support is written communication like chat or email.'},
+    {q:'Who typically coaches and supervises a small team of agents?', o:['The Team Leader','The Recruiter','The Client','The Building Security'], a:0, e:'Team Leaders coach and manage a group of agents.'},
+    {q:'The most important quality most employers look for in a new agent is:', o:['Perfect English accent','Clear communication and good attitude','Advanced coding skills','Prior call center experience'], a:1, e:'Communication and attitude usually matter more than experience for entry-level roles.'}
+  ]}
+},
+{id:'c2', title:'Communication Skills', blurb:'Learn to speak clearly, listen actively, and sound confident on every call.', level:'Foundation',
+  lessons:[
+    {t:'Effective Verbal Communication', c:'Effective verbal communication means saying what you mean in a way the listener easily understands. Use simple words, complete sentences, and a steady pace. Avoid rushing — customers need time to absorb what you say.', check:{q:'Effective verbal communication mainly focuses on:', o:['Speaking as fast as possible','Being clearly understood by the listener','Using complicated vocabulary','Speaking only in English idioms'], a:1, e:'The goal of communication is to be understood, not to sound impressive.'}},
+    {t:'Active Listening', c:'Active listening means fully focusing on the customer instead of planning your next sentence. Show you are listening by acknowledging ("I understand", "I see") and by not interrupting. This builds trust and reduces repeated questions.', check:{q:'A good sign of active listening is:', o:['Interrupting to save time','Acknowledging what the customer said','Talking over the customer','Multitasking while they talk'], a:1, e:'Acknowledging phrases show the customer you are truly listening.'}},
+    {t:'Proper Pronunciation', c:'Clear pronunciation is about saying each word so it can be understood, not about sounding like a native speaker. Slow down on important words like numbers, names, and account details. Practicing out loud daily improves pronunciation fast.', check:{q:'Clear pronunciation mainly means:', o:['Sounding exactly like a native speaker','Saying words clearly enough to be understood','Speaking as quietly as possible','Avoiding all accents'], a:1, e:'The goal is clarity and being understood, not imitating a specific accent.'}},
+    {t:'Tone and Voice Control', c:'Your tone carries emotion even more than your words. A warm, steady tone reassures an upset customer, while a flat or annoyed tone can make things worse. Smiling while you talk actually changes the sound of your voice for the better.', check:{q:'Why does tone matter on a call?', o:['It has no real effect','It carries emotion and affects how the message is received','It only matters in writing','Customers cannot hear tone'], a:1, e:'Tone communicates attitude and emotion, often more than the words themselves.'}},
+    {t:'Speaking Clearly and Confidently', c:'Confidence comes from preparation — knowing your script, your product, and your options. Stand or sit up straight, breathe before you speak, and avoid trailing off at the end of sentences. Confident speech reassures the customer that you can help them.', check:{q:'A simple way to sound more confident on calls is to:', o:['Speak as softly as possible','Prepare your knowledge and finish your sentences clearly','Avoid speaking until asked twice','Read word-for-word without understanding'], a:1, e:'Preparation and clear sentence delivery both build a confident sound.'}},
+    {t:'Professional Vocabulary', c:'Professional vocabulary avoids slang, and replaces negative words with softer alternatives — for example, saying "Let me check that for you" instead of "I don\'t know". This keeps the tone respectful and solution-focused.', check:{q:'Which phrase sounds more professional?', o:['"I have no idea."','"Let me check that for you."','"That\'s not my problem."','"Whatever you say."'], a:1, e:'This phrase is solution-focused and respectful.'}},
+    {t:'Avoiding Fillers', c:'Filler words like "um", "uh", "like", and "you know" make you sound less confident and can be hard for customers to follow. Replace fillers with a short, silent pause — it feels longer to you than it does to the listener.', check:{q:'A good replacement for a filler word is:', o:['A longer filler word','A short, silent pause','Speaking faster','Repeating the last word'], a:1, e:'A brief pause sounds more confident than a filler word.'}},
+    {t:'Building Rapport', c:'Rapport is a friendly connection with the customer. Use their name, mirror their energy appropriately, and show genuine interest in solving their problem. Small, genuine warmth goes a long way in a short call.', check:{q:'Using the customer\'s name during the call helps to:', o:['Waste time','Build rapport and connection','Confuse the customer','Slow down average handle time only'], a:1, e:'Using someone\'s name is a simple, effective way to build rapport.'}},
+    {t:'Asking Effective Questions', c:'Open-ended questions ("Can you tell me more about the issue?") help you understand the full problem, while closed questions ("Is your device turned on?") confirm specific details quickly. Good agents use both at the right moment.', check:{q:'An open-ended question is best used to:', o:['Confirm a yes/no detail','Understand the full situation','End the call quickly','Avoid listening to the customer'], a:1, e:'Open-ended questions invite more detail and context.'}},
+    {t:'Paraphrasing and Confirmation', c:'Paraphrasing means repeating the issue back in your own words ("So you\'re saying the app crashes when you log in — is that right?"). This confirms understanding and shows the customer you were listening before you offer a solution.', check:{q:'Paraphrasing during a call is used to:', o:['Repeat the customer word for word to save time','Confirm you understood the issue correctly','Change the subject','Avoid answering the question'], a:1, e:'Paraphrasing checks and confirms your understanding of the issue.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'Active listening is best shown by:', o:['Interrupting quickly','Acknowledging what was said','Staying silent the whole call','Reading unrelated notes'], a:1, e:'Acknowledgment phrases demonstrate active listening.'},
+    {q:'Filler words should be replaced with:', o:['Louder speech','A short pause','More filler words','Faster talking'], a:1, e:'A brief pause is cleaner than a filler word.'},
+    {q:'Paraphrasing helps you:', o:['Confirm understanding of the issue','End the call faster without listening','Avoid the customer\'s question','Sound less professional'], a:0, e:'It confirms you understood the customer correctly.'},
+    {q:'A professional way to say "I don\'t know" is:', o:['"That\'s impossible."','"Let me find that out for you."','"Ask someone else."','"I really have no clue."'], a:1, e:'This response is solution-focused and respectful.'},
+    {q:'Tone of voice mainly communicates:', o:['Nothing important','Emotion and attitude','Only volume','Only speed'], a:1, e:'Tone carries emotional meaning beyond the words themselves.'}
+  ]}
+},
+{id:'c3', title:'English Proficiency for Call Center Agents', blurb:'Sharpen your grammar, vocabulary, and comprehension for daily agent work.', level:'Foundation',
+  lessons:[
+    {t:'Basic Grammar', c:'Grammar is the set of rules that make sentences understandable. Even simple, short, grammatically correct sentences sound more professional than long, confusing ones. Focus on clarity first, complexity later.', check:{q:'A grammar goal for agents should be:', o:['Using the longest sentences possible','Clarity through correct, simple sentences','Avoiding grammar rules entirely','Speaking only in one-word answers'], a:1, e:'Clear, correct, simple sentences communicate best.'}},
+    {t:'Sentence Construction', c:'A complete sentence needs a subject and a verb, for example: "I will check your account." Avoid dropping the subject, which is common when translating directly from Filipino, e.g. saying "Checking your account" instead of "I am checking your account."', check:{q:'Which sentence is complete and correct?', o:['"Checking now."','"I am checking your account now."','"Now checking account."','"Account checking now."'], a:1, e:'This sentence has a clear subject ("I") and verb ("am checking").'}},
+    {t:'Verb Tenses', c:'Present tense describes now ("I understand"), past tense describes something finished ("I checked your account"), and future tense describes what will happen ("I will send you an email"). Using the right tense avoids confusing the customer about timing.', check:{q:'"I will send you an email" is an example of:', o:['Past tense','Present tense','Future tense','No tense'], a:2, e:'"Will send" describes an action that has not happened yet — future tense.'}},
+    {t:'Subject-Verb Agreement', c:'The verb must match the subject: "He needs help" (not "He need help"), "They need help" (not "They needs help"). This is a very common area for improvement for Filipino English learners — practice it daily.', check:{q:'Which sentence is correct?', o:['"She need assistance."','"She needs assistance."','"She needing assistance."','"She to need assistance."'], a:1, e:'"She" (singular) takes "needs", matching subject and verb.'}},
+    {t:'Articles (a, an, the)', c:'Use "a" before consonant sounds ("a refund"), "an" before vowel sounds ("an account"), and "the" for something specific already mentioned ("the order you placed yesterday"). Skipping articles is common but noticeable — practice adding them.', check:{q:'Which is correct?', o:['"I will process a refund."','"I will process refund."','"I will process an refund."','"I will process the a refund."'], a:0, e:'"Refund" starts with a consonant sound, so "a refund" is correct.'}},
+    {t:'Prepositions', c:'Prepositions show relationships between words, like "in", "on", "at", "for". For example: "Your order will arrive on Monday" or "I will call you at 3 PM". Getting these right avoids small but noticeable errors.', check:{q:'Which sentence uses the preposition correctly?', o:['"Your order will arrive in Monday."','"Your order will arrive on Monday."','"Your order will arrive at Monday."','"Your order will arrive for Monday."'], a:1, e:'Days of the week use "on" — "on Monday".'}},
+    {t:'Common Grammar Mistakes', c:'Common mistakes include mixing up "he/she", dropping "-s" on plural nouns, and saying "informations" instead of "information" (uncountable). Awareness of your personal patterns is the fastest way to improve.', check:{q:'Which is correct?', o:['"I need more informations."','"I need more information."','"I need an informations."','"I need many information."'], a:1, e:'"Information" is uncountable and has no plural "-s".'}},
+    {t:'Vocabulary Building', c:'Learn work-related vocabulary in context — words like "process", "escalate", "refund", "warranty". Reading and listening to English daily, even for 15 minutes, steadily grows your working vocabulary.', check:{q:'The best way to build vocabulary for work is to:', o:['Memorize a dictionary from A to Z','Learn work-related words in context daily','Avoid new words until fluent','Only study grammar rules'], a:1, e:'Learning vocabulary in real context helps you use it naturally.'}},
+    {t:'Pronunciation Practice', c:'Focus on sounds that are less common in Filipino, like the "th" sound in "think" or "that". Recording yourself and comparing to a native model helps you notice and correct small habits.', check:{q:'A good way to improve pronunciation is to:', o:['Never speak until perfect','Record and compare your own speech','Avoid difficult sounds forever','Speak only in your first language'], a:1, e:'Self-recording helps you notice patterns you cannot hear while speaking.'}},
+    {t:'Reading Comprehension', c:'Reading comprehension is understanding written information quickly and accurately — important for reading account notes, policies, and chat messages. Practice by reading short passages and summarizing the main idea in one sentence.', check:{q:'Reading comprehension is important for agents because they must:', o:['Never read anything at work','Quickly understand notes and policies','Only listen, never read','Avoid all documentation'], a:1, e:'Agents frequently read account notes, scripts, and policies.'}},
+    {t:'Listening Comprehension', c:'Listening comprehension means understanding spoken English even with accents, background noise, or fast speech. Practice with varied audio sources (podcasts, videos) and try summarizing what you heard afterward.', check:{q:'Listening comprehension practice should include:', o:['Only one speaker and accent','Varied accents and speaking speeds','Silence only','Reading instead of listening'], a:1, e:'Exposure to varied accents and speeds builds real-world listening skill.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'Which sentence has correct subject-verb agreement?', o:['"They needs help."','"They need help."','"They needing help."','"They to need help."'], a:1, e:'"They" (plural) takes "need", not "needs".'},
+    {q:'"Your refund will arrive ___ Friday." Fill in the blank:', o:['in','on','at','for'], a:1, e:'Days of the week use "on".'},
+    {q:'Which word is used correctly?', o:['"I need more informations."','"I need more information."','"I need one informations."','"I need many information."'], a:1, e:'"Information" is uncountable — no "-s".'},
+    {q:'"I will call you tomorrow" uses which tense?', o:['Past','Present','Future','None'], a:2, e:'"Will call" refers to something not yet done — future tense.'},
+    {q:'Reading comprehension mainly helps agents to:', o:['Type faster','Understand written notes and policies accurately','Avoid speaking','Skip customer questions'], a:1, e:'It is essential for understanding account notes and documentation.'}
+  ]}
+},
+{id:'c4', title:'Customer Service Fundamentals', blurb:'Master empathy, professionalism, and problem-solving that customers remember.', level:'Core',
+  lessons:[
+    {t:'What is Excellent Customer Service?', c:'Excellent customer service means solving the customer\'s problem efficiently while making them feel heard and respected. It is not just about being polite — it is about actually resolving the issue.', check:{q:'Excellent customer service is defined by:', o:['Being polite only, regardless of the outcome','Solving the problem while making the customer feel respected','Ending calls as fast as possible','Avoiding difficult questions'], a:1, e:'Both resolution and respectful treatment matter.'}},
+    {t:'Customer Expectations', c:'Most customers expect to be heard, to get an accurate answer, and to have their time respected. When you set clear expectations ("This will take about 5 minutes"), customers feel more in control and patient.', check:{q:'Setting a time expectation with a customer helps because:', o:['It makes them angrier','It helps them feel more in control and patient','It is unnecessary information','It slows down the call unnecessarily'], a:1, e:'Clear expectations reduce anxiety and impatience.'}},
+    {t:'Empathy', c:'Empathy means recognizing and acknowledging how the customer feels, e.g. "I understand how frustrating that must be." You don\'t need to agree the company is wrong — you just need to acknowledge their feelings before solving the problem.', check:{q:'An empathetic response to a frustrated customer is:', o:['"That\'s not really a big deal."','"I understand how frustrating that must be."','"You should have read the manual."','"Please calm down."'], a:1, e:'This response acknowledges the customer\'s emotion without dismissing it.'}},
+    {t:'Building Rapport (Applied)', c:'In customer service, rapport is built through tone, using the customer\'s name, and small acknowledgments of their situation. A customer who feels a genuine connection is more patient and more likely to stay loyal.', check:{q:'Rapport in customer service is mainly built through:', o:['Scripts read robotically','Tone, names, and genuine acknowledgment','Ignoring the customer\'s mood','Rushing through the call'], a:1, e:'These small human touches build trust quickly.'}},
+    {t:'Professionalism', c:'Professionalism means staying calm, respectful, and solution-focused even when the customer is not. Never match a customer\'s anger with anger — your calm tone is part of what resolves the situation.', check:{q:'If a customer is rude, a professional agent should:', o:['Match their tone and get upset too','Stay calm and solution-focused','Hang up immediately','Argue back'], a:1, e:'Professionalism means staying composed regardless of the customer\'s tone.'}},
+    {t:'Handling Difficult Customers (Overview)', c:'Difficult customers are often reacting to a bad experience, not to you personally. Separate the person from the problem: acknowledge their frustration, then focus fully on the solution. This course continues in depth in Course 6.', check:{q:'When a customer is difficult, it usually means:', o:['They dislike you personally','They are reacting to a frustrating experience','They are always lying','They should be ignored'], a:1, e:'Frustration is usually about the situation, not the agent.'}},
+    {t:'De-escalation Techniques', c:'To de-escalate: lower your volume and speed, acknowledge the emotion, avoid arguing about who is right, and move quickly toward what you can do next. Saying "Here\'s what I can do for you" shifts the conversation toward a solution.', check:{q:'A good de-escalation phrase is:', o:['"You\'re wrong about that."','"Here\'s what I can do for you."','"Calm down right now."','"This isn\'t my department, sorry."'], a:1, e:'This phrase moves the conversation toward action and solution.'}},
+    {t:'Problem Solving', c:'Good problem solving means gathering the facts, checking available options, and choosing the best solution within your ability to offer. If you cannot solve it yourself, explain the next step clearly instead of leaving the customer confused.', check:{q:'If you cannot solve an issue yourself, you should:', o:['Say nothing and end the call','Clearly explain the next step to the customer','Blame another department','Guess an answer'], a:1, e:'Transparency about next steps keeps the customer informed and reassured.'}},
+    {t:'Taking Ownership', c:'Taking ownership means treating the customer\'s problem as your responsibility to resolve or properly hand off — not something to pass along carelessly. Say "I will take care of this for you" instead of "That\'s not my job."', check:{q:'Taking ownership of a customer issue means:', o:['Passing it along without explanation','Treating it as your responsibility to resolve or properly route','Ignoring the request','Blaming the customer'], a:1, e:'Ownership means responsibility, even when you need to route the issue elsewhere.'}},
+    {t:'Creating a Positive Customer Experience', c:'A positive experience comes from combining empathy, clear communication, and an efficient solution. Ending the call with a warm, genuine closing ("Is there anything else I can help you with today?") leaves a lasting good impression.', check:{q:'A strong way to close a customer call is to:', o:['Hang up immediately after solving the issue','Ask if there is anything else you can help with','Rush the customer off the phone','Say nothing and transfer'], a:1, e:'This closing question shows continued care and professionalism.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'Empathy in customer service means:', o:['Agreeing the company is always wrong','Acknowledging how the customer feels','Ignoring the customer\'s emotion','Ending the call quickly'], a:1, e:'Empathy is about acknowledgment, not necessarily agreement.'},
+    {q:'A customer is angry because their order has not arrived. The best first response is:', o:['"That\'s not my problem."','"I understand how frustrating this delay must be — let me check your order right away."','"You should have tracked it yourself."','"Please stop being upset."'], a:1, e:'This response combines empathy with immediate action, which is the strongest approach.'},
+    {q:'De-escalation is best supported by:', o:['Raising your voice to match theirs','Lowering your tone and offering a solution','Arguing about who is right','Staying silent the whole call'], a:1, e:'A calm tone paired with solution-focused language de-escalates tension.'},
+    {q:'"That\'s not my job" is an example of:', o:['Taking ownership','Avoiding ownership','Good customer service','Empathy'], a:1, e:'This phrase avoids responsibility rather than owning the issue.'},
+    {q:'A strong way to end a customer service call is to:', o:['Hang up without a word','Ask if there is anything else you can help with','Rush to the next call','Complain about the customer'], a:1, e:'This closing question is warm, professional, and thorough.'}
+  ]}
+},
+{id:'c5', title:'Call Handling Skills', blurb:'Learn the full structure of a professional call, from greeting to closing.', level:'Core',
+  lessons:[
+    {t:'Opening / Greeting', c:'A strong opening sets the tone for the whole call: greet the customer, state your name, and the company name. Example: "Thank you for calling ABC Support, my name is John, how may I assist you today?" Keep it warm but efficient.', check:{q:'A professional opening should include:', o:['Only "Hello"','Company name, your name, and an offer to help','Immediately asking for account number','Silence until the customer speaks'], a:1, e:'A complete greeting introduces the company, the agent, and invites the customer\'s concern.'}},
+    {t:'Verification', c:'Before discussing account details, verify the customer\'s identity (name, account number, or security details) according to your company\'s policy. This protects both the customer and the company.', check:{q:'Verification before discussing account details exists to:', o:['Slow the call down unnecessarily','Protect the customer\'s privacy and security','Confuse the customer','Test the agent\'s memory'], a:1, e:'Verification protects sensitive account information.'}},
+    {t:'Identifying the Customer\'s Concern', c:'Ask an open question like "How can I help you today?" and listen fully before responding. Avoid assuming the issue before the customer finishes explaining.', check:{q:'To identify the customer\'s concern, you should:', o:['Interrupt with your own guess','Ask an open question and listen fully','Immediately transfer the call','Ignore what they say first'], a:1, e:'Letting the customer fully explain avoids misunderstanding the real issue.'}},
+    {t:'Active Listening (Applied to Calls)', c:'While the customer explains, use short verbal acknowledgments ("I see", "Okay", "Got it") so they know you\'re engaged, since they cannot see you nodding. Take brief notes on key details.', check:{q:'Why use verbal acknowledgments during a phone call?', o:['The customer cannot see you nodding','They are required by law','They replace note-taking','They end the call faster'], a:0, e:'Since the customer cannot see nonverbal cues, verbal acknowledgment shows engagement.'}},
+    {t:'Probing Questions', c:'Probing questions dig deeper into the issue: "When did this start happening?" or "Have you tried restarting the device?" These questions help you diagnose the real cause instead of guessing.', check:{q:'A probing question is used to:', o:['End the conversation','Dig deeper and understand the root cause','Confuse the customer','Avoid solving the issue'], a:1, e:'Probing questions clarify details needed to solve the issue correctly.'}},
+    {t:'Providing a Solution', c:'Once you understand the issue, explain the solution clearly and in simple steps. If there are multiple options, explain the pros and cons briefly so the customer can decide.', check:{q:'When giving a solution, you should:', o:['Use complicated technical terms only','Explain it clearly in simple steps','Give the solution without checking if it applies','Avoid mentioning any options'], a:1, e:'Clear, simple steps help the customer understand and follow the resolution.'}},
+    {t:'Confirming Resolution', c:'After providing the solution, confirm the customer understands and that the issue is actually resolved: "Does that resolve your concern today?" Never assume — always ask.', check:{q:'Confirming resolution means:', o:['Ending the call immediately after explaining','Asking if the issue is actually resolved','Assuming it worked without asking','Skipping this step to save time'], a:1, e:'Confirmation ensures the customer\'s issue is truly solved before ending the call.'}},
+    {t:'Closing the Call', c:'A good closing thanks the customer, recaps briefly if needed, and offers further help: "Thank you for calling, is there anything else I can help you with today? Have a great day!" This leaves a positive final impression.', check:{q:'A professional closing statement should:', o:['End abruptly without thanks','Thank the customer and offer further help','Rush the customer off the line','Skip any goodbye'], a:1, e:'A warm, complete closing reinforces a positive customer experience.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'What comes first in a professional call?', o:['Providing a solution','Opening / greeting','Closing the call','Probing questions'], a:1, e:'The greeting opens and sets the tone for the whole call.'},
+    {q:'Verification exists mainly to:', o:['Waste time','Protect account security and privacy','Impress the customer','Replace the greeting'], a:1, e:'It confirms you are speaking with the authorized account holder.'},
+    {q:'"When did this issue start happening?" is an example of:', o:['A closing statement','A probing question','A greeting','An apology'], a:1, e:'This question digs deeper to understand the root cause.'},
+    {q:'Before ending the call, you should always:', o:['Hang up immediately after the solution','Confirm the issue is resolved','Skip the closing','Assume it worked'], a:1, e:'Confirming resolution ensures true customer satisfaction.'},
+    {q:'Agent: "Thank you for calling ABC Support, my name is John, how may I assist you today?" This is an example of:', o:['Closing','Probing','Opening/Greeting','Verification'], a:2, e:'This is a textbook professional opening.'}
+  ]}
+},
+{id:'c6', title:'Handling Difficult Customers', blurb:'Practice the Listen–Acknowledge–Empathize–Clarify–Resolve–Confirm framework across real scenarios.', level:'Advanced',
+  lessons:[
+    {t:'The LAECRC Framework', c:'For any difficult interaction, follow: Listen fully → Acknowledge what they said → Empathize with their feeling → Clarify the details → Resolve the issue → Confirm satisfaction. This structure keeps you calm and organized under pressure.', check:{q:'The correct order of the framework is:', o:['Resolve, Listen, Confirm, Empathize','Listen, Acknowledge, Empathize, Clarify, Resolve, Confirm','Empathize, Resolve, Listen, Confirm','Clarify, Confirm, Listen, Resolve'], a:1, e:'Listen → Acknowledge → Empathize → Clarify → Resolve → Confirm is the full sequence.'}},
+    {t:'The Angry Customer', c:'An angry customer needs to feel heard before anything else. Do not interrupt, lower your tone, and acknowledge their frustration before offering solutions: "I completely understand your frustration, let\'s get this fixed."', check:{q:'The first step with an angry customer should be:', o:['Interrupt to explain policy','Let them fully express their frustration first','Transfer them immediately','Argue about the facts'], a:1, e:'Letting them be heard first reduces the emotional intensity.'}},
+    {t:'The Impatient Customer', c:'Impatient customers want speed and clarity. Give brief time estimates and avoid unnecessary explanations: "I can fix this in about two minutes — let me do that now."', check:{q:'An impatient customer responds best to:', o:['Long explanations','Clear time estimates and quick action','Being placed on hold with no explanation','Being ignored'], a:1, e:'Speed and clarity address their core need directly.'}},
+    {t:'The Confused Customer', c:'Confused customers need patience and simple, step-by-step language. Avoid jargon, and check understanding often: "Does that make sense so far?"', check:{q:'When a customer is confused, you should:', o:['Use more technical terms','Simplify your language and check understanding often','Speak faster','Assume they understand'], a:1, e:'Simplicity and frequent check-ins help a confused customer follow along.'}},
+    {t:'The Repeating Customer', c:'Some customers repeat themselves because they don\'t feel heard yet. Paraphrase back what they said to show understanding, which often stops the repetition: "So the charge appeared twice on your statement, is that right?"', check:{q:'A customer keeps repeating the same complaint. The best response is to:', o:['Ignore it and move on','Paraphrase it back to show you understood','Ask them to stop repeating','Transfer immediately'], a:1, e:'Paraphrasing shows you heard them, which usually resolves the repetition.'}},
+    {t:'The Customer Demanding a Supervisor', c:'Stay calm and avoid taking it personally. Try to understand and solve the issue first: "I\'d like to help resolve this myself — can you tell me more about what happened?" If they still insist, follow your company\'s escalation process respectfully.', check:{q:'When a customer demands a supervisor, you should first:', o:['Refuse completely','Try to understand and resolve the issue yourself first','Argue that they don\'t need one','Hang up'], a:1, e:'Attempting resolution first is respectful and often successful, before escalating if needed.'}},
+    {t:'The Customer Refusing to Cooperate', c:'If a customer refuses to provide needed information (like verification details), explain clearly why it\'s needed and what you cannot do without it, staying calm and non-confrontational.', check:{q:'If a customer refuses to give verification info, you should:', o:['Give them account access anyway','Calmly explain why the information is required','Get frustrated and argue','Hang up immediately'], a:1, e:'A calm explanation of the requirement respects both security and the relationship.'}},
+    {t:'The Customer Using Inappropriate Language', c:'Stay professional and set a respectful boundary: "I want to help you, but I need us to keep this conversation respectful so I can continue assisting you." Follow your company\'s policy if the behavior continues.', check:{q:'If a customer uses inappropriate language, an agent should:', o:['Respond with the same language','Calmly set a respectful boundary','Hang up without a word','Ignore the behavior completely and say nothing'], a:1, e:'A calm, respectful boundary keeps the interaction professional.'}},
+    {t:'The Customer Threatening to Cancel / Blaming the Company', c:'Acknowledge their frustration without being defensive, and focus on what you can offer now to keep them satisfied. Avoid arguing about blame — focus energy on the solution and their experience going forward.', check:{q:'When a customer blames the company and threatens to cancel, the best focus is:', o:['Arguing about who is at fault','Acknowledging their frustration and focusing on a solution','Agreeing the company is terrible','Ending the call to avoid the topic'], a:1, e:'Focusing on a solution addresses the customer\'s real goal — a resolved problem.'}}
+  ],
+  quiz:{pass:80,q:[
+    {q:'The LAECRC framework starts with:', o:['Resolve','Listen','Confirm','Clarify'], a:1, e:'Listening comes first, before any other step.'},
+    {q:'With an angry customer, you should first:', o:['Defend the company','Let them fully express their frustration','Hang up','Transfer immediately'], a:1, e:'Letting them vent first reduces emotional intensity before problem-solving.'},
+    {q:'A confused customer benefits most from:', o:['More jargon','Simple, step-by-step language','Faster speech','Being ignored'], a:1, e:'Simplicity helps a confused customer follow the conversation.'},
+    {q:'If a customer demands a supervisor, you should first:', o:['Refuse','Try to resolve it yourself, respectfully','Get upset','Hang up'], a:1, e:'Attempting resolution first often satisfies the customer without escalation.'},
+    {q:'When a customer uses inappropriate language, the agent should:', o:['Match their tone','Set a calm, respectful boundary','Ignore it entirely','Argue back'], a:1, e:'A calm boundary maintains professionalism while continuing to help.'}
+  ]}
+}
+];
+
+const SCENARIOS = [
+ {id:'s1', level:'Beginner', title:'Internet Connection Not Working', customer:'"Hi, my internet has completely stopped working since this morning. I have an important video call in an hour!"', recommended:'"I understand how urgent this is with your call coming up. Let\'s get this fixed right away — can you tell me what the lights on your modem look like right now?"', avoid:'Do not say "Have you tried turning it off and on?" immediately without first acknowledging their urgency — it can feel dismissive.', tips:['Acknowledge the urgency first.','Ask a simple diagnostic question.','Give a realistic time estimate.'], model:'Empathize with the time pressure, then move quickly into troubleshooting with clear, simple questions.'},
+ {id:'s2', level:'Beginner', title:'Simple Billing Question', customer:'"Can you explain why my bill this month is higher than usual?"', recommended:'"Of course, let me pull up your billing details and walk you through the charges for this month."', avoid:'Avoid guessing an answer before checking the account.', tips:['Always check the account before answering.','Break down charges clearly.','Offer to explain any one-time fees.'], model:'Check the account, then explain each new or unusual charge in plain language.'},
+ {id:'s3', level:'Intermediate', title:'Angry Customer — Late Delivery', customer:'"This is ridiculous! I ordered this a week ago and it still hasn\'t arrived! I want a refund right now!"', recommended:'"I completely understand your frustration — a week is too long to wait, and I\'m sorry for the delay. Let me check your order right now and see what we can do."', avoid:'Do not say "It\'s not my fault" or argue about the shipping company — it shifts blame instead of solving the problem.', tips:['Acknowledge the emotion before explaining anything.','Avoid blaming other departments.','Offer a concrete next step (tracking, refund, or replacement).'], model:'Empathize immediately, take ownership of finding a solution, and offer clear next steps (refund, replacement, or expedited shipping).'},
+ {id:'s4', level:'Intermediate', title:'Confused Customer — App Not Working', customer:'"I don\'t understand this app at all. Nothing makes sense, I just want it to work like before."', recommended:'"No worries, let\'s take it one step at a time. Can you tell me what screen you\'re currently seeing?"', avoid:'Avoid technical jargon like "clear your cache" without explaining what that means.', tips:['Slow down your pace.','Use simple, plain language.','Check understanding after each step.'], model:'Break the process into small steps, use plain language, and confirm understanding frequently.'},
+ {id:'s5', level:'Advanced', title:'Customer Demanding a Supervisor + Threatening to Cancel', customer:'"I\'ve been transferred three times already! Get me your supervisor now or I\'m canceling everything!"', recommended:'"I\'m really sorry you\'ve been transferred multiple times — that shouldn\'t have happened. I\'d like to personally resolve this for you right now, can you walk me through what happened?"', avoid:'Do not immediately transfer without attempting resolution, and do not argue about the previous transfers.', tips:['Acknowledge the poor experience directly.','Attempt resolution before escalating.','Stay calm regardless of their tone.'], model:'Own the frustration caused by prior transfers, attempt a real resolution yourself, and escalate respectfully only if truly needed.'},
+ {id:'s6', level:'Advanced', title:'Customer Using Inappropriate Language While Blaming the Company', customer:'"Your [expletive] company always messes things up! This is the worst service ever!"', recommended:'"I want to help you resolve this, and I need us to keep the conversation respectful so I can keep assisting you. Let\'s look at what happened."', avoid:'Do not respond with anger, sarcasm, or matching language.', tips:['Set a calm, respectful boundary.','Stay solution-focused, not blame-focused.','Follow your company policy if it continues.'], model:'Set a firm but respectful boundary, then redirect the conversation toward a concrete solution.'}
+];
+
+const ASSESSMENTS = [
+ {id:'a1', title:'English Proficiency Test', desc:'Grammar, vocabulary, sentence construction, and reading comprehension.', pass:80, q:[
+   {q:'Choose the correct sentence:', o:['"She go to work every day."','"She goes to work every day."','"She going to work every day."','"She gone to work every day."'], a:1, e:'Third-person singular present tense needs "-es": "goes".'},
+   {q:'"I ___ your email yesterday." Fill in the blank:', o:['receive','received','receiving','will receive'], a:1, e:'"Yesterday" signals past tense: "received".'},
+   {q:'Which word means "to make a problem bigger or more serious"?', o:['Escalate','Resolve','Paraphrase','Verify'], a:0, e:'"Escalate" means to raise an issue to a higher level, often making it more urgent.'},
+   {q:'Choose the correct article: "I need ___ update on my order."', o:['a','an','the (only)','no article needed'], a:1, e:'"Update" starts with a vowel sound, so "an" is correct.'},
+   {q:'Read: "The customer called about a billing error and asked for a refund." What did the customer ask for?', o:['A new product','A refund','A supervisor','A cancellation'], a:1, e:'The passage directly states the customer asked for a refund.'},
+   {q:'Which sentence has correct subject-verb agreement?', o:['"The agents helps customers daily."','"The agents help customers daily."','"The agents helping customers daily."','"The agent help customers daily."'], a:1, e:'"Agents" (plural) takes "help", not "helps".'},
+   {q:'Choose the best preposition: "Your package will arrive ___ 3 PM."', o:['in','on','at','for'], a:2, e:'Specific clock times use "at" — "at 3 PM".'},
+   {q:'Which word is spelled and used correctly in context?', o:['"I will proceed with the refund."','"I will procede with the refund."','"I will preceed with the refund."','"I will proseed with the refund."'], a:0, e:'"Proceed" is the correct spelling.'}
+ ]},
+ {id:'a2', title:'Customer Service Assessment', desc:'Empathy, customer handling, problem solving, and professionalism.', pass:80, q:[
+   {q:'A customer says their order is late. Your best first response is:', o:['"That\'s shipping\'s fault, not mine."','"I understand the delay is frustrating — let me check your order."','"These things happen, nothing I can do."','"Please be patient."'], a:1, e:'This combines empathy with immediate action.'},
+   {q:'Empathy means:', o:['Agreeing with everything the customer says','Acknowledging the customer\'s feelings','Ignoring emotions and focusing only on facts','Apologizing excessively without action'], a:1, e:'Empathy is about acknowledgment, not blind agreement.'},
+   {q:'A customer asks a question you don\'t know the answer to. You should:', o:['Guess an answer','Say you\'ll find out and follow up','Say "I don\'t know" and move on','Transfer without explanation'], a:1, e:'Finding the accurate answer and following up maintains trust.'},
+   {q:'Professionalism during a difficult call means:', o:['Matching the customer\'s tone','Staying calm and solution-focused','Ending the call quickly to avoid conflict','Arguing your point firmly'], a:1, e:'Professionalism requires composure regardless of the customer\'s tone.'},
+   {q:'Taking ownership of an issue means:', o:['Passing it along without follow-up','Treating it as your responsibility to resolve or properly route','Avoiding responsibility','Blaming another department'], a:1, e:'Ownership means responsibility for resolution or proper handoff.'},
+   {q:'The best way to close a customer interaction is to:', o:['Hang up right after the fix','Ask if there\'s anything else you can help with','Rush to the next call','Say nothing further'], a:1, e:'This closing question shows continued care.'},
+   {q:'A customer is being rude. The professional response is to:', o:['Be rude back','Stay calm and continue helping','Hang up immediately','Ignore them completely'], a:1, e:'Staying calm keeps the interaction productive.'},
+   {q:'Good problem solving starts with:', o:['Guessing a fast answer','Gathering the facts first','Ignoring the details','Transferring immediately'], a:1, e:'Understanding the full situation leads to better solutions.'}
+ ]},
+ {id:'a3', title:'Call Handling Assessment', desc:'Call flow, probing, active listening, call control, and closing.', pass:80, q:[
+   {q:'The correct first step of a professional call is:', o:['Providing a solution','Greeting and introduction','Verification','Closing'], a:1, e:'The greeting always comes first.'},
+   {q:'"Can you tell me when this issue started?" is an example of:', o:['A closing statement','A probing question','A greeting','An apology'], a:1, e:'This digs deeper into the issue — a probing question.'},
+   {q:'Verification protects:', o:['Nothing important','Account security and privacy','The agent\'s schedule','The call recording system'], a:1, e:'Verification confirms you are speaking with the authorized account holder.'},
+   {q:'Before ending a call, an agent should always:', o:['Hang up right after the fix','Confirm the issue is resolved','Assume it worked','Skip confirmation to save time'], a:1, e:'Confirmation ensures true resolution before ending.'},
+   {q:'Call control means:', o:['Letting the conversation go in any direction','Guiding the conversation efficiently while staying respectful','Interrupting frequently','Speaking as little as possible'], a:1, e:'Call control keeps the conversation on track and productive.'},
+   {q:'A good closing statement includes:', o:['A thank-you and an offer of further help','Silence','An abrupt goodbye','Nothing extra'], a:0, e:'This leaves a positive final impression.'},
+   {q:'Active listening on a phone call is shown through:', o:['Silence the entire time','Short verbal acknowledgments','Talking over the customer','Multitasking'], a:1, e:'Since the customer can\'t see you, verbal cues show engagement.'},
+   {q:'The purpose of a probing question is to:', o:['End the conversation','Understand the root cause','Confuse the customer','Avoid the topic'], a:1, e:'Probing questions clarify the real issue.'}
+ ]},
+ {id:'a4', title:'Situational Judgment Test', desc:'Realistic BPO situations with a best-answer approach.', pass:75, q:[
+   {q:'A customer has been transferred three times and is already angry. What should you do?', o:['Transfer them a fourth time immediately','Acknowledge the poor experience and attempt to resolve it yourself first','Argue that the transfers were necessary','Ask them to call back later'], a:1, e:'Owning the resolution yourself, after acknowledging the frustration, is the strongest approach.'},
+   {q:'You realize you gave a customer incorrect information earlier in the call. You should:', o:['Say nothing and hope they don\'t notice','Politely correct yourself right away','Blame the system for the error','End the call quickly'], a:1, e:'Honesty and a quick correction maintain trust.'},
+   {q:'A customer asks for something outside company policy. You should:', o:['Grant it anyway to avoid conflict','Explain what you can do within policy, and offer alternatives','Say "no" with no explanation','Hang up'], a:1, e:'Explaining the policy and offering alternatives is respectful and clear.'},
+   {q:'You are unsure how to solve a technical issue. The best action is:', o:['Guess a solution','Put the customer on hold briefly to check resources or ask a colleague','End the call','Tell the customer it cannot be fixed'], a:1, e:'Checking a resource or colleague ensures an accurate solution.'},
+   {q:'A customer is crying because of a stressful personal situation related to their issue. You should:', o:['Rush through the call','Acknowledge their feelings gently and proceed with patience','Ignore the emotion completely','Tell them to calm down immediately'], a:1, e:'Gentle acknowledgment shows compassion while still helping them.'},
+   {q:'You notice the customer\'s account has an error caused by your company. You should:', o:['Hide the error','Acknowledge the error and explain how it will be fixed','Blame the customer','Ignore it and move on'], a:1, e:'Transparency and ownership build trust even when the company made a mistake.'}
+ ]},
+ {id:'a5', title:'Final Readiness Assessment', desc:'A comprehensive test combining English, communication, customer service, call handling, and situational judgment.', pass:80, q:[
+   {q:'Choose the correct sentence:', o:['"He don\'t have an account."','"He doesn\'t have an account."','"He not have an account."','"He having no account."'], a:1, e:'Third-person singular negative uses "doesn\'t".'},
+   {q:'Active listening is best shown by:', o:['Interrupting','Verbal acknowledgment and no interrupting','Silence only','Multitasking'], a:1, e:'Acknowledgment without interruption shows genuine listening.'},
+   {q:'Empathy in a difficult call means:', o:['Agreeing the company is wrong','Acknowledging the customer\'s feelings','Ignoring emotion','Ending the call fast'], a:1, e:'Empathy is acknowledgment of feeling, not necessarily agreement.'},
+   {q:'The correct order of a call is:', o:['Closing, Greeting, Solution','Greeting, Identifying Concern, Solution, Closing','Solution, Greeting, Closing','Closing, Solution, Greeting'], a:1, e:'A call should follow a logical structure from greeting to closing.'},
+   {q:'A customer transferred multiple times and now angry should be:', o:['Transferred again immediately','Acknowledged and helped directly first','Ignored','Told to call back'], a:1, e:'Attempting resolution yourself, after acknowledgment, is the best move.'},
+   {q:'"Let me check that for you" is more professional than:', o:['"I have no idea."','"Sure, one moment."','"Of course."','"Absolutely."'], a:0, e:'"I have no idea" is dismissive and unprofessional compared to the alternative.'},
+   {q:'Filler words should be replaced with:', o:['Louder speech','A short pause','More filler words','Faster talking'], a:1, e:'A brief pause sounds more confident and professional.'},
+   {q:'When you don\'t know an answer, you should:', o:['Guess','Say you\'ll find out and follow up','Ignore the question','Transfer without explanation'], a:1, e:'Finding an accurate answer maintains trust and professionalism.'},
+   {q:'A confused customer benefits most from:', o:['Technical jargon','Simple, step-by-step language','Faster speech','Silence'], a:1, e:'Clarity and simplicity help confused customers follow along.'},
+   {q:'The final step before ending any call should be:', o:['Hanging up immediately','Confirming the issue is resolved','Skipping confirmation','Assuming it worked'], a:1, e:'Confirmation ensures the customer\'s issue is truly solved.'}
+ ]}
+];
+
+const QBANK = [
+ {cat:'HR Questions', q:'Tell me about yourself.', look:'A concise professional summary — not your life story.', structure:'Present (who you are) → Past (relevant background) → Future (why this role).', sample:'"I\'m a fresh graduate with a strong interest in customer service. I\'ve worked part-time in retail, where I learned patience and clear communication, and I\'m excited to grow that into a career in the BPO industry."', mistakes:'Rambling for several minutes, or reciting your full resume.', tip:'Keep it under 60-90 seconds and end by connecting to the role.'},
+ {cat:'HR Questions', q:'Why do you want to work in a call center?', look:'Genuine motivation and awareness of what the job involves.', structure:'Interest → Fit → Growth.', sample:'"I enjoy helping people solve problems, and I like that this industry rewards clear communication and consistent performance with real career growth."', mistakes:'Saying "I just need a job" with no real interest shown.', tip:'Mention something specific about growth or skill-building.'},
+ {cat:'HR Questions', q:'Why should we hire you?', look:'Confidence backed by specific, relevant strengths.', structure:'Strength → Evidence → Value to the company.', sample:'"I communicate clearly under pressure, I learn quickly, and I stay calm even in stressful situations — all of which help me resolve customer concerns efficiently."', mistakes:'Being vague ("I\'m a hard worker") without evidence.', tip:'Pick 2 strengths and give one short example for each.'},
+ {cat:'HR Questions', q:'What are your strengths?', look:'Self-awareness and relevance to the role.', structure:'Strength → Brief example.', sample:'"One of my strengths is staying calm under pressure — even during a stressful shift at my previous job, I kept a clear head and finished my tasks accurately."', mistakes:'Listing strengths with no examples.', tip:'Choose strengths that matter for call center work: patience, communication, adaptability.'},
+ {cat:'HR Questions', q:'What is your weakness?', look:'Honesty plus proof you are actively improving.', structure:'Weakness → What you are doing about it.', sample:'"I used to get nervous speaking in front of groups, so I\'ve been practicing by joining training sessions and mock calls to build my confidence."', mistakes:'Saying "I have no weaknesses" or naming something irrelevant as a fake weakness.', tip:'Choose something real but not critical to the job, and show growth.'},
+ {cat:'HR Questions', q:'Where do you see yourself in five years?', look:'Ambition that aligns with realistic growth in the company.', structure:'Short-term goal → Growth path.', sample:'"In five years, I hope to have grown into a Team Leader or Quality Analyst role, having built strong experience as an agent first."', mistakes:'Naming a completely unrelated career goal.', tip:'Reference a growth path that exists within the BPO industry.'},
+ {cat:'Customer Service Questions', q:'What is good customer service?', look:'Understanding that both resolution and respect matter.', structure:'Definition → Example.', sample:'"Good customer service means solving the customer\'s problem accurately while making them feel heard and respected throughout the interaction."', mistakes:'Saying "being nice" without mentioning problem-solving.', tip:'Mention both empathy and resolution.'},
+ {cat:'Customer Service Questions', q:'How would you handle an angry customer?', look:'A calm, structured approach.', structure:'Listen → Acknowledge → Empathize → Resolve.', sample:'"I would let them fully explain their frustration, acknowledge how they feel, and then focus on finding a solution as quickly as possible."', mistakes:'Saying you would argue back or hang up.', tip:'Reference the LAECRC framework from Course 6.'},
+ {cat:'Customer Service Questions', q:'How do you handle pressure?', look:'A calm, practical coping approach.', structure:'Example of pressure → How you managed it → Result.', sample:'"During a busy period at my last job, I focused on one task at a time and stayed organized, which helped me finish everything accurately without feeling overwhelmed."', mistakes:'Saying you "don\'t handle pressure well."', tip:'Give one concrete example of staying composed.'},
+ {cat:'Customer Service Questions', q:'What would you do if you don\'t know the answer to a customer\'s question?', look:'Honesty combined with a plan for finding the answer.', structure:'Acknowledge → Find the answer → Follow up.', sample:'"I would let the customer know I want to give them accurate information, quickly check available resources or ask a colleague, and follow up promptly."', mistakes:'Saying you would guess or make something up.', tip:'Never suggest guessing — accuracy matters.'},
+ {cat:'Situational Questions', q:'Describe a time you dealt with a difficult person.', look:'A real (or realistic) example using the STAR method.', structure:'Situation → Task → Action → Result.', sample:'"A classmate was upset about a group project deadline (Situation). I needed to keep the team on track (Task). I listened to their concerns and proposed a revised schedule (Action). We finished on time and the classmate thanked me for listening (Result)."', mistakes:'Giving a vague answer with no real structure.', tip:'Always end with a clear, positive result.'},
+ {cat:'Situational Questions', q:'What would you do if a customer asked for something against company policy?', look:'Respectful boundary-setting with problem-solving.', structure:'Acknowledge → Explain the policy → Offer an alternative.', sample:'"I would acknowledge their request, explain what I\'m able to do within policy, and offer any alternative solution available to still help them."', mistakes:'Saying you would break the rule to please the customer.', tip:'Show that you balance customer care with company guidelines.'},
+ {cat:'Behavioral Questions', q:'Tell me about a time you made a mistake at work or school.', look:'Accountability and what you learned.', structure:'Situation → Mistake → Correction → Lesson learned.', sample:'"I once submitted a report with an error in the numbers (Situation/Mistake). I caught it the next day, corrected it immediately, and informed my supervisor (Action). Since then I always double-check my work before submitting (Result/Lesson)."', mistakes:'Blaming others or denying ever making mistakes.', tip:'Own the mistake and focus on the lesson learned.'},
+ {cat:'Behavioral Questions', q:'Tell me about a time you worked as part of a team.', look:'Collaboration skills and a positive outcome.', structure:'Situation → Your role → Result.', sample:'"In a group project, I was responsible for coordinating our schedule (Situation/Task). I made sure everyone knew their deadlines and checked in regularly (Action), and we submitted the project on time with a great grade (Result)."', mistakes:'Taking all the credit or dismissing teammates.', tip:'Highlight your specific contribution to the team\'s success.'},
+ {cat:'Communication Questions', q:'How would you explain a complicated process to a customer who doesn\'t understand technical terms?', look:'Ability to simplify without being condescending.', structure:'Simplify → Use analogies → Confirm understanding.', sample:'"I would avoid technical jargon, break the process into small simple steps, and check in after each step to make sure they\'re following along."', mistakes:'Using more jargon to sound smart.', tip:'Mention checking for understanding along the way.'},
+ {cat:'BPO Questions', q:'What do you know about the BPO industry?', look:'Basic industry awareness from your training.', structure:'Definition → Relevance to the role.', sample:'"BPO stands for Business Process Outsourcing — companies hire outside teams, like call centers, to handle tasks such as customer support, which is the role I\'m applying for."', mistakes:'Saying "I don\'t know anything about it."', tip:'Review Course 1 before this interview question.'},
+ {cat:'BPO Questions', q:'What is the difference between a voice and non-voice account?', look:'Clear understanding of both formats.', structure:'Definition of each → Example.', sample:'"A voice account involves speaking with customers over the phone, while a non-voice account handles support through chat, email, or social media instead of speaking."', mistakes:'Confusing the two or giving no example.', tip:'This is a common screening question — know it well.'},
+ {cat:'Fresh Graduate Questions', q:'You have no call center experience — why should we consider you?', look:'Transferable skills and eagerness to learn.', structure:'Transferable skill → Willingness to learn.', sample:'"While I don\'t have direct call center experience, I\'ve developed strong communication skills through school presentations and part-time work, and I\'ve completed structured training to prepare for this role."', mistakes:'Apologizing repeatedly for lack of experience.', tip:'Mention this academy\'s training as proof of preparation.'},
+ {cat:'No Experience Questions', q:'How can you handle customers if you\'ve never worked in customer service before?', look:'Confidence in trained skills, not just theoretical knowledge.', structure:'Training → Practice → Confidence.', sample:'"I\'ve completed structured training in communication, customer service, and call handling, and practiced real scenarios through mock calls and assessments to prepare for real customer interactions."', mistakes:'Saying you have no idea how you\'ll handle it.', tip:'Reference specific practice you\'ve done, like this academy\'s role-play section.'},
+ {cat:'Career Shift Questions', q:'Why are you shifting careers to join the BPO industry?', look:'A clear, positive reason for the shift.', structure:'Previous path → Reason for shift → Alignment with new role.', sample:'"My previous role taught me a lot, but I\'m looking for a career with clearer growth opportunities and where my communication skills can be put to greater use — which is what drew me to this industry."', mistakes:'Speaking negatively about a previous employer.', tip:'Stay positive about your past experience while explaining your new direction.'}
+];
+
+const VOCAB = [
+ {term:'AHT', def:'Average Handle Time', ex:'The total average time an agent spends on a customer interaction, including hold and after-call work. Example: "Our team\'s AHT this month was 6 minutes."'},
+ {term:'ACW', def:'After-Call Work', ex:'Tasks completed right after a call ends, like updating notes. Example: "I need two minutes of ACW to finish documenting this call."'},
+ {term:'QA', def:'Quality Assurance', ex:'The team or process that reviews calls to ensure standards are met. Example: "QA gave me positive feedback on my last call."'},
+ {term:'KPI', def:'Key Performance Indicator', ex:'A measurable target used to track performance. Example: "AHT and CSAT are both important KPIs for agents."'},
+ {term:'CSAT', def:'Customer Satisfaction Score', ex:'A rating showing how satisfied a customer was with their experience. Example: "We aim for a CSAT score above 90%."'},
+ {term:'FCR', def:'First Call Resolution', ex:'Solving a customer\'s issue completely during their first contact, without needing a follow-up. Example: "High FCR means fewer repeat calls."'},
+ {term:'Escalation', def:'Raising an issue to a higher level of support', ex:'When an agent cannot resolve something, it may be escalated to a supervisor. Example: "I need to escalate this billing dispute to my Team Leader."'},
+ {term:'Transfer', def:'Moving a call to another agent or department', ex:'Example: "Let me transfer you to our technical support team who can assist further."'},
+ {term:'Hold', def:'Temporarily pausing the conversation while the customer waits', ex:'Example: "Can I place you on a brief hold while I check your account?"'},
+ {term:'Adherence', def:'Following your assigned work schedule accurately', ex:'Example: "Good adherence means logging in and taking breaks exactly on schedule."'},
+ {term:'Occupancy', def:'The percentage of time an agent spends actively handling calls versus waiting', ex:'Example: "High occupancy means the agent is almost always on a call."'},
+ {term:'SLA', def:'Service Level Agreement', ex:'A commitment about response or resolution time made to a client. Example: "Our SLA requires answering 80% of calls within 30 seconds."'},
+ {term:'Upselling', def:'Offering a customer a higher-value product or upgrade', ex:'Example: "Would you like to upgrade to our premium plan for faster support?"'},
+ {term:'Cross-selling', def:'Offering a customer a related, additional product', ex:'Example: "Since you have internet service, would you be interested in our TV bundle?"'},
+ {term:'Dead Air', def:'Silence during a call, often when the agent is searching for information', ex:'Example: "Avoid dead air by letting the customer know what you\'re doing: \'I\'m just checking your account now.\'"'},
+ {term:'Ramp-up', def:'The training and adjustment period for a new hire', ex:'Example: "New agents usually have a two-week ramp-up before handling calls independently."'},
+ {term:'Schedule Adherence', def:'How closely an agent follows their assigned shift and break times', ex:'Example: "Schedule adherence affects overall team performance metrics."'},
+ {term:'Nesting', def:'The initial period after training when new agents take live calls with support nearby', ex:'Example: "During nesting, a mentor sits near new agents to help if needed."'},
+ {term:'Attrition', def:'The rate at which employees leave a company', ex:'Example: "The company is working to reduce attrition by improving agent support."'},
+ {term:'Soft Skills', def:'Interpersonal abilities like communication, empathy, and patience', ex:'Example: "Soft skills are just as important as technical knowledge in this industry."'}
+];
+
+const MOCK_QUESTIONS = [
+ {q:'Tell me about yourself.', kw:['experience','skills','communication','customer','learn','graduate','background']},
+ {q:'Why do you want to work in a call center?', kw:['help','people','communication','growth','opportunity','career']},
+ {q:'How would you handle an angry customer?', kw:['listen','acknowledge','empathize','calm','solution','understand']},
+ {q:'Describe a time you solved a difficult problem.', kw:['situation','action','result','solved','challenge','solution']},
+ {q:'What are your strengths and how do they help you as an agent?', kw:['patient','communication','strength','calm','confident','skill']},
+ {q:'Where do you see yourself in five years within this company?', kw:['grow','team leader','career','opportunity','learn','improve']}
+];
+
+const TESTIMONIALS = [
+ {name:'Angeline R.', role:'Now a Customer Service Representative, Manila', quote:'The mock interview module helped me stop panicking about "Tell me about yourself" — I finally had a structure to follow.'},
+ {name:'Mark Anthony D.', role:'Now a Technical Support Agent, Cebu', quote:'I used the English Proficiency course every night for two weeks. My grammar assessment score went from 60% to 92%.'},
+ {name:'Jhoanna P.', role:'Fresh graduate, currently applying', quote:'The role-play scenarios felt like real calls. I wasn\'t nervous anymore on my actual phone interview.'}
+];
+
+const FAQS = [
+ {q:'Is this training academy really free?', a:'Yes. Every course, quiz, assessment, and interview preparation tool on this platform is completely free — no payment information is ever required.'},
+ {q:'Do I need call center experience to start?', a:'No experience is needed. The courses start from the fundamentals and build up to interview-level skills, designed for complete beginners.'},
+ {q:'How long does it take to finish the program?', a:'It depends on your pace, since this is fully self-paced. Most learners complete all six courses and the final readiness assessment within 3 to 6 weeks of consistent daily practice.'},
+ {q:'What is the "Am I Ready?" score?', a:'It is a combined readiness score based on your course completion, assessment results, and mock interview performance, giving you an honest picture of your job-readiness.'},
+ {q:'Will I get a certificate?', a:'Yes, once you complete all six courses and take the Final Readiness Assessment, you can generate a training completion certificate. Please note this is a training certificate, not a professional license or a guarantee of employment.'}
+];
+
+/* =====================================================================
+   STORAGE + STATE
+===================================================================== */
+const State = { user:null, progress:null, route:'home', params:{}, quizState:{}, toastTimer:null };
+
+async function sGet(key, shared){ try{ const r = await window.storage.get(key, shared); return r?JSON.parse(r.value):null; }catch(e){ return null; } }
+async function sSet(key, val, shared){ try{ await window.storage.set(key, JSON.stringify(val), shared); return true; }catch(e){ return false; } }
+async function sList(prefix, shared){ try{ const r = await window.storage.list(prefix, shared); return r?r.keys:[]; }catch(e){ return []; } }
+
+function emptyProgress(name,email){
+  return {name, email, points:0, lessonsDone:{}, checkDone:{}, courseQuiz:{}, assessments:{}, mockInterview:null, resumeChecklist:{}, badges:[], createdAt:Date.now()};
+}
+function totalLessons(){ return COURSES.reduce((s,c)=>s+c.lessons.length,0); }
+function courseProgressPct(course, prog){
+  if(!prog) return 0;
+  const done = course.lessons.filter((l,i)=>prog.lessonsDone[course.id+'_'+i]).length;
+  return Math.round(done/course.lessons.length*100);
+}
+function overallCoursePct(prog){
+  if(!prog) return 0;
+  const t = totalLessons(); let d=0;
+  COURSES.forEach(c=>c.lessons.forEach((l,i)=>{ if(prog.lessonsDone[c.id+'_'+i]) d++; }));
+  return Math.round(d/t*100);
+}
+function levelInfo(points){
+  const levels = [
+    {min:0,name:'Newbie'},{min:100,name:'Trainee'},{min:250,name:'Call Center Apprentice'},
+    {min:450,name:'Customer Service Pro'},{min:700,name:'Interview Ready'},{min:900,name:'BPO Career Ready'}
+  ];
+  let cur = levels[0];
+  for(const l of levels){ if(points>=l.min) cur=l; }
+  return cur;
+}
+async function addPoints(n){
+  State.progress.points += n;
+  await saveProgress();
+}
+async function saveProgress(){
+  if(!State.progress) return;
+  await sSet('progress_'+State.progress.email, State.progress, true);
+}
+function awardBadge(id){
+  if(!State.progress.badges.includes(id)) State.progress.badges.push(id);
+}
+const BADGES = {
+  first_lesson:{icon:'🏆', label:'First Lesson Completed'},
+  quiz_master:{icon:'🏆', label:'Quiz Master'},
+  cs_pro:{icon:'🏆', label:'Customer Service Pro'},
+  call_ready:{icon:'🏆', label:'Call Handling Ready'},
+  interview_ready:{icon:'🏆', label:'Interview Ready'},
+  bpo_ready:{icon:'🏆', label:'BPO Career Ready'}
+};
+async function checkBadges(){
+  const before = [...State.progress.badges];
+  if(Object.keys(State.progress.lessonsDone).length>=1) awardBadge('first_lesson');
+  if(Object.values(State.progress.courseQuiz).filter(r=>r&&r.passed).length>=3) awardBadge('quiz_master');
+  if(courseProgressPct(COURSES.find(c=>c.id==='c4'),State.progress)===100) awardBadge('cs_pro');
+  if(courseProgressPct(COURSES.find(c=>c.id==='c5'),State.progress)===100) awardBadge('call_ready');
+  if(State.progress.mockInterview && State.progress.mockInterview.overall>=70) awardBadge('interview_ready');
+  if(computeReadiness().pct>=85) awardBadge('bpo_ready');
+  if(JSON.stringify(before)!==JSON.stringify(State.progress.badges)) await saveProgress();
+}
+
+function computeReadiness(){
+  const prog = State.progress;
+  if(!prog) return {pct:0, strengths:[], weaknesses:[], breakdown:{}};
+  const coursePct = overallCoursePct(prog);
+  const asmtScores = ASSESSMENTS.map(a=>prog.assessments[a.id]?prog.assessments[a.id].pct:0);
+  const asmtAvg = asmtScores.reduce((a,b)=>a+b,0)/ASSESSMENTS.length;
+  const mockScore = prog.mockInterview?prog.mockInterview.overall:0;
+  const pct = Math.round(coursePct*0.35 + asmtAvg*0.45 + mockScore*0.20);
+  const areas = [
+    {name:'Course Completion', val:coursePct},
+    {name:'English Proficiency', val:prog.assessments['a1']?prog.assessments['a1'].pct:0},
+    {name:'Customer Service', val:prog.assessments['a2']?prog.assessments['a2'].pct:0},
+    {name:'Call Handling', val:prog.assessments['a3']?prog.assessments['a3'].pct:0},
+    {name:'Situational Judgment', val:prog.assessments['a4']?prog.assessments['a4'].pct:0},
+    {name:'Mock Interview', val:mockScore}
+  ];
+  const attempted = areas.filter(a=>a.val>0);
+  const strengths = attempted.filter(a=>a.val>=75).map(a=>a.name);
+  const weaknesses = areas.filter(a=>a.val<75).map(a=>a.name);
+  return {pct, strengths, weaknesses, breakdown:areas};
+}
+
+function toast(msg){
+  clearTimeout(State.toastTimer);
+  let el = document.getElementById('toastEl');
+  if(!el){ el=document.createElement('div'); el.id='toastEl'; el.className='toast'; document.body.appendChild(el); }
+  el.textContent = msg; el.style.display='block';
+  State.toastTimer = setTimeout(()=>{ el.style.display='none'; }, 3200);
+}
+
+/* =====================================================================
+   ROUTER + NAV RENDER
+===================================================================== */
+const App = {};
+App.nav = function(route, params){ State.route=route; State.params=params||{}; window.scrollTo(0,0); render(); };
+App.runSearch = function(q){ App.nav('search', {q}); };
+
+function renderTopNav(){
+  const links = [
+    ['home','Home'],['courses','Courses'],['assessments','Assessments'],
+    ['interviewprep','Interview Prep'],['vocabulary','Vocabulary'],['readiness','Am I Ready?']
+  ];
+  document.getElementById('navlinks').innerHTML = links.map(([r,l])=>
+    `<button class="${State.route===r?'active':''}" onclick="App.nav('${r}')">${l}</button>`).join('');
+  const actions = document.getElementById('navActions');
+  if(State.user){
+    actions.innerHTML = `<button class="btn btn-outline btn-sm" onclick="App.nav('dashboard')">Dashboard</button>
+      <button class="btn-ghost btn-sm" onclick="App.logout()">Log out</button>`;
+  } else {
+    actions.innerHTML = `<button class="btn btn-primary btn-sm" onclick="App.nav('login')">Log in / Register</button>`;
+  }
+}
+
+App.logout = async function(){
+  await sSet('session', null, false);
+  State.user=null; State.progress=null;
+  App.nav('home');
+};
+
+/* =====================================================================
+   MAIN RENDER
+===================================================================== */
+async function render(){
+  renderTopNav();
+  const app = document.getElementById('app');
+  const needsAuth = ['dashboard','course','lesson','coursequiz','assessment','progresspage','certificate','readiness','roleplayrun','mockinterview'];
+  if(needsAuth.includes(State.route) && !State.user){
+    app.innerHTML = authGate();
+    return;
+  }
+  switch(State.route){
+    case 'home': app.innerHTML = await pageHome(); break;
+    case 'login': app.innerHTML = pageLogin(); break;
+    case 'dashboard': app.innerHTML = pageDashboard(); break;
+    case 'courses': app.innerHTML = pageCourseCatalog(); break;
+    case 'course': app.innerHTML = pageCourseDetail(State.params.id, State.params.lesson||0); break;
+    case 'coursequiz': app.innerHTML = pageCourseQuiz(State.params.id); break;
+    case 'roleplay': app.innerHTML = pageRoleplayList(); break;
+    case 'roleplayrun': app.innerHTML = pageRoleplayRun(State.params.id); break;
+    case 'assessments': app.innerHTML = pageAssessmentList(); break;
+    case 'assessment': app.innerHTML = pageAssessmentRun(State.params.id); break;
+    case 'interviewprep': app.innerHTML = pageInterviewPrep(); break;
+    case 'mockinterview': app.innerHTML = pageMockInterview(); break;
+    case 'qbank': app.innerHTML = pageQuestionBank(); break;
+    case 'resume': app.innerHTML = pageResume(); break;
+    case 'vocabulary': app.innerHTML = pageVocabulary(); break;
+    case 'progresspage': app.innerHTML = pageProgress(); break;
+    case 'certificate': app.innerHTML = pageCertificate(); break;
+    case 'readiness': app.innerHTML = pageReadiness(); break;
+    case 'admin': app.innerHTML = await pageAdmin(); break;
+    case 'search': app.innerHTML = pageSearch(State.params.q||''); break;
+    default: app.innerHTML = await pageHome();
+  }
+  window.__postRender && window.__postRender();
+}
+
+function authGate(){
+  return `<div class="container section center">
+    <h2>Please log in to continue</h2>
+    <p class="muted">Create a free account to save your progress, take assessments, and track your readiness.</p>
+    <button class="btn btn-primary" onclick="App.nav('login')">Log in / Register</button>
+  </div>`;
+}
+
+/* ---------------- HOME ---------------- */
+async function pageHome(){
+  const anns = await sGet('announcements', true) || [];
+  const latest = anns.slice(-1)[0];
+  return `
+  <div class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow-tag">100% Free Training</span>
+        <h1>START YOUR CALL CENTER CAREER WITH CONFIDENCE</h1>
+        <p class="hero-sub">Learn the skills, practice real-world scenarios, pass your assessments, and prepare for your final interview — all in one place.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-gold" onclick="App.nav('${State.user?'dashboard':'login'}')">Start Learning for Free</button>
+          <button class="btn btn-outline" onclick="App.nav('assessments')">Take Assessment</button>
+          <button class="btn btn-outline" onclick="App.nav('interviewprep')">Interview Preparation</button>
+        </div>
+      </div>
+      <div class="callcard">
+        <div class="line"><span class="who">AGENT</span><span class="txt">Thank you for calling ABC Support, my name is John — how may I assist you today?</span></div>
+        <div class="line"><span class="who">CUSTOMER</span><span class="txt">Hi John, I've been waiting for my order for two weeks!</span></div>
+        <div class="line"><span class="who">AGENT</span><span class="txt">I completely understand your frustration — let's look into your order right now.</span></div>
+        <div class="callcard-foot"><span><span class="pulse-dot"></span>Live call simulation preview</span><span class="small">Course 5 · Call Handling</span></div>
+      </div>
+    </div>
+  </div>
+
+  ${latest?`<div class="container"><div class="announce">📣 <strong>Academy Announcement:</strong> ${escapeHtml(latest.text)}</div></div>`:''}
+
+  <div class="section-tight" style="background:var(--paper-dim);">
+    <div class="container grid grid-4">
+      ${[['6','Full Courses'],['5','Skill Assessments'],['6','Difficult-Customer Scenarios'],['100%','Free, Always']].map(([n,l])=>
+        `<div class="center"><h2 style="margin-bottom:2px;">${n}</h2><p class="small muted">${l}</p></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow-tag">Course Library</span>
+      <h2>Everything you need, in one learning path</h2>
+      <p class="muted" style="max-width:60ch;">Six courses take you from complete beginner to interview-ready, with quizzes, scenarios, and assessments built in.</p>
+      <div class="grid grid-3" style="margin-top:28px;">
+        ${COURSES.map(c=>`<div class="card course-card">
+          <span class="tag">${c.level}</span>
+          <h3>${c.title}</h3>
+          <p class="small muted">${c.blurb}</p>
+          <p class="lesson-count">${c.lessons.length} lessons · course quiz included</p>
+        </div>`).join('')}
+      </div>
+      <div class="center" style="margin-top:28px;"><button class="btn btn-primary" onclick="App.nav('courses')">Browse full course catalog</button></div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--ink);color:#fff;">
+    <div class="container">
+      <span class="eyebrow-tag" style="background:rgba(255,255,255,.12);color:var(--gold-soft);">Why this academy</span>
+      <h2 style="color:#fff;">Built for how Filipino learners actually get hired</h2>
+      <div class="grid grid-3" style="margin-top:24px;">
+        ${[
+          ['Practice, not just theory','Role-play real customer scenarios and get a model answer, coaching tips, and things to avoid.'],
+          ['Know exactly where you stand','Every course, quiz, and assessment feeds into one clear "Am I Ready?" score.'],
+          ['Real interview preparation','Practice a full mock interview and get scored feedback before your actual interview.']
+        ].map(([t,d])=>`<div><h3 style="color:#fff;">${t}</h3><p style="color:#C9D3DD;">${d}</p></div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow-tag">Student Stories</span>
+      <h2>From training to their first day on the floor</h2>
+      <div class="grid grid-3" style="margin-top:24px;">
+        ${TESTIMONIALS.map(t=>`<div class="card">
+          <p>"${escapeHtml(t.quote)}"</p>
+          <p class="small" style="font-weight:700;margin-bottom:0;">${t.name}</p>
+          <p class="small muted">${t.role}</p>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--paper-dim);">
+    <div class="container" style="max-width:760px;">
+      <span class="eyebrow-tag">FAQ</span>
+      <h2>Common questions</h2>
+      <div id="faqList">
+        ${FAQS.map((f,i)=>`<div class="faq-item" id="faq${i}">
+          <button class="faq-q" onclick="toggleFaq(${i})"><span>${f.q}</span><span>+</span></button>
+          <div class="faq-a">${f.a}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>
+  `;
+}
+function toggleFaq(i){ document.getElementById('faq'+i).classList.toggle('open'); }
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------------- LOGIN / REGISTER ---------------- */
+function pageLogin(){
+  return `<div class="container section" style="max-width:460px;">
+    <h2 class="center">Welcome to the Academy</h2>
+    <p class="muted center">Create a free account or log in to continue your training.</p>
+    <div class="card">
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <button id="tabLoginBtn" class="btn btn-primary btn-sm" style="flex:1;" onclick="switchAuthTab('login')">Log In</button>
+        <button id="tabRegisterBtn" class="btn btn-outline btn-sm" style="flex:1;" onclick="switchAuthTab('register')">Register</button>
+      </div>
+      <div id="authForm"></div>
+      <p id="authMsg" class="small" style="color:var(--coral);margin-top:10px;"></p>
+    </div>
+  </div>`;
+}
+function switchAuthTab(tab){
+  document.getElementById('tabLoginBtn').className = 'btn btn-sm '+(tab==='login'?'btn-primary':'btn-outline');
+  document.getElementById('tabRegisterBtn').className = 'btn btn-sm '+(tab==='register'?'btn-primary':'btn-outline');
+  document.getElementById('authForm').innerHTML = tab==='login' ? loginForm() : registerForm();
+}
+function loginForm(){
+  return `<div class="field"><label>Email</label><input type="email" id="liEmail"></div>
+  <div class="field"><label>Password</label><input type="password" id="liPass"></div>
+  <button class="btn btn-primary btn-block" onclick="App.doLogin()">Log In</button>`;
+}
+function registerForm(){
+  return `<div class="field"><label>Full Name</label><input type="text" id="reName"></div>
+  <div class="field"><label>Email</label><input type="email" id="reEmail"></div>
+  <div class="field"><label>Password</label><input type="password" id="rePass"></div>
+  <button class="btn btn-primary btn-block" onclick="App.doRegister()">Create Free Account</button>`;
+}
+App.doRegister = async function(){
+  const name = document.getElementById('reName').value.trim();
+  const email = document.getElementById('reEmail').value.trim().toLowerCase();
+  const pass = document.getElementById('rePass').value;
+  const msg = document.getElementById('authMsg');
+  if(!name||!email||!pass){ msg.textContent='Please fill in all fields.'; return; }
+  const existing = await sGet('user_'+email, true);
+  if(existing){ msg.textContent='An account with this email already exists. Please log in instead.'; return; }
+  await sSet('user_'+email, {name,email,pass}, true);
+  const prog = emptyProgress(name,email);
+  await sSet('progress_'+email, prog, true);
+  await sSet('session', {email}, false);
+  State.user = {name,email}; State.progress = prog;
+  await checkBadges();
+  toast('Welcome to the Academy, '+name+'!');
+  App.nav('dashboard');
+};
+App.doLogin = async function(){
+  const email = document.getElementById('liEmail').value.trim().toLowerCase();
+  const pass = document.getElementById('liPass').value;
+  const msg = document.getElementById('authMsg');
+  const u = await sGet('user_'+email, true);
+  if(!u || u.pass!==pass){ msg.textContent='Incorrect email or password.'; return; }
+  let prog = await sGet('progress_'+email, true);
+  if(!prog){ prog = emptyProgress(u.name,email); await sSet('progress_'+email, prog, true); }
+  await sSet('session', {email}, false);
+  State.user = {name:u.name, email}; State.progress = prog;
+  toast('Welcome back, '+u.name+'!');
+  App.nav('dashboard');
+};
+
+/* ---------------- DASHBOARD ---------------- */
+function pageDashboard(){
+  const p = State.progress;
+  const lvl = levelInfo(p.points);
+  const nextLesson = findNextLesson();
+  return `<div class="container section">
+    <h2>Welcome back, ${escapeHtml(p.name.split(' ')[0])}</h2>
+    <p class="muted">Level: <strong>${lvl.name}</strong> · ${p.points} points earned</p>
+    ${nextLesson?`<button class="btn btn-gold" style="margin-bottom:28px;" onclick="App.nav('course',{id:'${nextLesson.cid}',lesson:${nextLesson.idx}})">Continue Learning →</button>`:
+      `<button class="btn btn-gold" style="margin-bottom:28px;" onclick="App.nav('courses')">Browse Courses</button>`}
+    <div class="app-shell">
+      <div>
+        <div class="card" style="margin-bottom:20px;">
+          <h3>Your Progress</h3>
+          ${COURSES.map(c=>{ const pct=courseProgressPct(c,p); return `
+          <div class="pbar-row">
+            <div class="pbar-label"><span>${c.title}</span><span>${pct}%</span></div>
+            <div class="pbar-track"><div class="pbar-fill" style="width:${pct}%"></div></div>
+          </div>`;}).join('')}
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Assessment Scores</h3>
+            ${ASSESSMENTS.map(a=>{const r=p.assessments[a.id]; return `<div class="pbar-row"><div class="pbar-label"><span>${a.title}</span><span>${r?r.pct+'%':'Not taken'}</span></div><div class="pbar-track"><div class="pbar-fill gold" style="width:${r?r.pct:0}%"></div></div></div>`;}).join('')}
+          </div>
+          <div class="card">
+            <h3>Interview Readiness</h3>
+            ${p.mockInterview? `<p class="small">Overall score: <strong>${p.mockInterview.overall}%</strong></p>
+            <div class="pbar-track"><div class="pbar-fill" style="width:${p.mockInterview.overall}%"></div></div>
+            <p class="small muted" style="margin-top:10px;">Retake the mock interview any time to improve your score.</p>`
+            : `<p class="muted small">You haven't taken the mock interview yet.</p>`}
+            <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="App.nav('mockinterview')">Go to Mock Interview</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:20px;">
+          <h3>Badges</h3>
+          <div class="badge-row">
+            ${Object.entries(BADGES).map(([id,b])=>`<div class="badge-chip ${p.badges.includes(id)?'':'locked'}">${b.icon} ${b.label}</div>`).join('')}
+          </div>
+        </div>
+        <div class="card">
+          <h3>Quick Links</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="App.nav('readiness')">Am I Ready For a Job?</button>
+            <button class="btn btn-outline btn-sm" onclick="App.nav('roleplay')">Practice Role-Play</button>
+            <button class="btn btn-outline btn-sm" onclick="App.nav('progresspage')">Full Progress Report</button>
+            <button class="btn btn-outline btn-sm" onclick="App.nav('certificate')">My Certificate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function findNextLesson(){
+  const p = State.progress;
+  for(const c of COURSES){
+    for(let i=0;i<c.lessons.length;i++){
+      if(!p.lessonsDone[c.id+'_'+i]) return {cid:c.id, idx:i};
+    }
+  }
+  return null;
+}
+
+/* ---------------- COURSE CATALOG / DETAIL ---------------- */
+function pageCourseCatalog(){
+  return `<div class="container section">
+    <span class="eyebrow-tag">Course Library</span>
+    <h2>All Courses</h2>
+    <div class="grid grid-3">
+      ${COURSES.map(c=>{ const pct = State.progress?courseProgressPct(c,State.progress):0; return `
+      <div class="card course-card">
+        <span class="tag">${c.level}</span>
+        <h3>${c.title}</h3>
+        <p class="small muted">${c.blurb}</p>
+        <p class="lesson-count">${c.lessons.length} lessons</p>
+        ${State.user?`<div class="pbar-track" style="margin:10px 0;"><div class="pbar-fill" style="width:${pct}%"></div></div><p class="small muted">${pct}% complete</p>`:''}
+        <button class="btn btn-primary btn-sm" style="margin-top:8px;" onclick="App.nav('course',{id:'${c.id}',lesson:0})">${pct>0?'Continue':'Start Course'}</button>
+      </div>`;}).join('')}
+    </div>
+  </div>`;
+}
+
+function pageCourseDetail(cid, lessonIdx){
+  const c = COURSES.find(x=>x.id===cid);
+  if(!c) return `<div class="container section"><p>Course not found.</p></div>`;
+  lessonIdx = Math.max(0, Math.min(lessonIdx, c.lessons.length-1));
+  const lesson = c.lessons[lessonIdx];
+  const p = State.progress;
+  const lessonKey = c.id+'_'+lessonIdx;
+  const done = !!p.lessonsDone[lessonKey];
+  const allDone = c.lessons.every((l,i)=>p.lessonsDone[c.id+'_'+i]);
+  const checkKey = lessonKey+'_check';
+  const checkDone = p.checkDone[checkKey];
+
+  return `<div class="container section">
+    <p class="small muted"><a href="#" onclick="App.nav('courses');return false;">Courses</a> / ${c.title}</p>
+    <div class="app-shell">
+      <div class="side-nav">
+        <h4 style="margin-bottom:8px;">${c.title}</h4>
+        ${c.lessons.map((l,i)=>`<div class="lesson-nav-item ${i===lessonIdx?'active':''} ${p.lessonsDone[c.id+'_'+i]?'done':''}" onclick="App.nav('course',{id:'${c.id}',lesson:${i}})"><span class="dot"></span>${i+1}. ${l.t}</div>`).join('')}
+        <div class="lesson-nav-item" style="margin-top:8px;border-top:1px solid var(--line);padding-top:14px;" onclick="App.nav('coursequiz',{id:'${c.id}'})"><span class="dot" style="border-radius:3px;"></span>📝 Course Quiz ${p.courseQuiz[c.id]&&p.courseQuiz[c.id].passed?'✓':''}</div>
+      </div>
+      <div>
+        <div class="card">
+          <p class="small muted">Lesson ${lessonIdx+1} of ${c.lessons.length}</p>
+          <h2>${lesson.t}</h2>
+          <p>${lesson.c}</p>
+          <div class="tip-box">💡 Quick Tip: Review this lesson again before taking the course quiz if anything feels unclear.</div>
+          <div id="checkArea">${renderQuickCheck(lesson.check, checkKey, checkDone)}</div>
+          <hr class="divider">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <button class="btn btn-outline btn-sm" ${lessonIdx===0?'disabled':''} onclick="App.nav('course',{id:'${c.id}',lesson:${lessonIdx-1}})">← Previous</button>
+            <button class="btn btn-teal btn-sm" onclick="App.completeLesson('${c.id}',${lessonIdx})">${done?'✓ Marked Complete':'Mark Lesson Complete'}</button>
+            ${lessonIdx<c.lessons.length-1?
+              `<button class="btn btn-primary btn-sm" onclick="App.nav('course',{id:'${c.id}',lesson:${lessonIdx+1}})">Next →</button>`:
+              `<button class="btn btn-gold btn-sm" onclick="App.nav('coursequiz',{id:'${c.id}'})">Take Course Quiz →</button>`}
+          </div>
+          ${allDone?`<p class="small" style="margin-top:14px;color:var(--teal);">🎉 Great job! You're one step closer to becoming a call center professional. All lessons complete — take the course quiz when ready.</p>`:''}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderQuickCheck(check, key, doneInfo){
+  if(!check) return '';
+  if(doneInfo){
+    return `<div class="quiz-q"><p style="font-weight:600;">Quick Check: ${check.q}</p>
+      ${check.o.map((o,i)=>`<div class="quiz-opt ${i===check.a?'correct':(i===doneInfo.picked&&i!==check.a?'wrong':'')}">${o}</div>`).join('')}
+      <p class="quiz-explain">${check.e}</p></div>`;
+  }
+  return `<div class="quiz-q"><p style="font-weight:600;">Quick Check: ${check.q}</p>
+    ${check.o.map((o,i)=>`<button class="quiz-opt" onclick="App.answerCheck('${key}',${i},${check.a})">${o}</button>`).join('')}
+  </div>`;
+}
+App.answerCheck = async function(key, picked, correct){
+  State.progress.checkDone[key] = {picked, correct: picked===correct};
+  if(picked===correct) await addPoints(5);
+  await saveProgress();
+  render();
+};
+App.completeLesson = async function(cid, idx){
+  const key = cid+'_'+idx;
+  if(!State.progress.lessonsDone[key]){
+    State.progress.lessonsDone[key] = true;
+    await addPoints(10);
+    await checkBadges();
+    toast('Lesson complete! +10 points');
+  }
+  await saveProgress();
+  render();
+};
+
+/* ---------------- COURSE QUIZ ---------------- */
+function pageCourseQuiz(cid){
+  const c = COURSES.find(x=>x.id===cid);
+  const key = 'cq_'+cid;
+  if(!State.quizState[key]) State.quizState[key] = {answers:new Array(c.quiz.q.length).fill(null), submitted:false};
+  const qs = State.quizState[key];
+  return `<div class="container section" style="max-width:760px;">
+    <p class="small muted"><a href="#" onclick="App.nav('course',{id:'${cid}',lesson:0});return false;">${c.title}</a> / Course Quiz</p>
+    <h2>${c.title} — Course Quiz</h2>
+    <p class="muted">Passing score: ${c.quiz.pass}%. You can retake this quiz as many times as you need.</p>
+    ${qs.submitted?renderQuizResult(qs, c.quiz):''}
+    ${c.quiz.q.map((q,qi)=>renderQuizQuestion(key,qi,q,qs)).join('')}
+    ${!qs.submitted?`<button class="btn btn-primary" onclick="App.submitCourseQuiz('${cid}')">Submit Quiz</button>`:
+      `<button class="btn btn-outline" onclick="App.retakeCourseQuiz('${cid}')">Retake Quiz</button> <button class="btn btn-primary" onclick="App.nav('courses')">Back to Courses</button>`}
+  </div>`;
+}
+function renderQuizQuestion(key, qi, q, qs){
+  const picked = qs.answers[qi];
+  return `<div class="quiz-q">
+    <p style="font-weight:600;">${qi+1}. ${q.q}</p>
+    ${q.o.map((o,oi)=>{
+      let cls='quiz-opt';
+      if(qs.submitted){ if(oi===q.a) cls+=' correct'; else if(oi===picked) cls+=' wrong'; }
+      else if(oi===picked) cls+=' selected';
+      return `<button class="${cls}" ${qs.submitted?'disabled':''} onclick="App.pickAnswer('${key}',${qi},${oi})">${o}</button>`;
+    }).join('')}
+    ${qs.submitted?`<p class="quiz-explain">${q.e}</p>`:''}
+  </div>`;
+}
+App.pickAnswer = function(key, qi, oi){
+  State.quizState[key].answers[qi]=oi;
+  render();
+};
+function renderQuizResult(qs, quizDef){
+  const correct = qs.answers.filter((a,i)=>a===quizDef.q[i].a).length;
+  const pct = Math.round(correct/quizDef.q.length*100);
+  const passed = pct>=quizDef.pass;
+  qs.lastScore = pct; qs.lastPassed = passed;
+  return `<div class="result-banner ${passed?'pass':'fail'}">
+    Score: ${pct}% (${correct}/${quizDef.q.length} correct) — ${passed?'Congratulations! You passed this assessment.':'Keep practicing! Review the recommended lessons and try again.'}
+  </div>`;
+}
+App.submitCourseQuiz = async function(cid){
+  const key = 'cq_'+cid;
+  const qs = State.quizState[key];
+  if(qs.answers.includes(null)){ toast('Please answer all questions first.'); return; }
+  qs.submitted = true;
+  const c = COURSES.find(x=>x.id===cid);
+  const correct = qs.answers.filter((a,i)=>a===c.quiz.q[i].a).length;
+  const pct = Math.round(correct/c.quiz.q.length*100);
+  const passed = pct>=c.quiz.pass;
+  State.progress.courseQuiz[cid] = {pct, passed, attempts:(State.progress.courseQuiz[cid]?State.progress.courseQuiz[cid].attempts:0)+1};
+  if(passed) await addPoints(30);
+  await checkBadges();
+  await saveProgress();
+  render();
+};
+App.retakeCourseQuiz = function(cid){
+  const key='cq_'+cid;
+  delete State.quizState[key];
+  render();
+};
+
+/* ---------------- ROLE-PLAY ---------------- */
+function pageRoleplayList(){
+  const levels = ['Beginner','Intermediate','Advanced'];
+  return `<div class="container section">
+    <span class="eyebrow-tag">Practice Center</span>
+    <h2>Role-Play &amp; Call Simulation</h2>
+    <p class="muted" style="max-width:60ch;">Practice responding to real customer scenarios. Read the situation, think through your response, then reveal the model answer and coaching tips.</p>
+    ${levels.map(lv=>`<h3 style="margin-top:28px;">${lv}</h3><div class="grid grid-3">
+      ${SCENARIOS.filter(s=>s.level===lv).map(s=>`<div class="card">
+        <span class="tag ${lv==='Beginner'?'beg':lv==='Intermediate'?'int':'adv'}">${lv}</span>
+        <h3 style="font-size:1.05rem;">${s.title}</h3>
+        <p class="small muted">${s.customer}</p>
+        <button class="btn btn-outline btn-sm" onclick="App.nav('roleplayrun',{id:'${s.id}'})">Practice This Scenario</button>
+      </div>`).join('')}
+    </div>`).join('')}
+  </div>`;
+}
+function pageRoleplayRun(id){
+  const s = SCENARIOS.find(x=>x.id===id);
+  const revealed = State.quizState['rp_'+id];
+  return `<div class="container section" style="max-width:720px;">
+    <p class="small muted"><a href="#" onclick="App.nav('roleplay');return false;">Role-Play</a> / ${s.title}</p>
+    <span class="tag ${s.level==='Beginner'?'beg':s.level==='Intermediate'?'int':'adv'}">${s.level}</span>
+    <h2>${s.title}</h2>
+    <div class="dialogue"><div class="who">CUSTOMER</div><p style="margin:0;">${s.customer}</p></div>
+    <label>Type how you would respond as the agent:</label>
+    <textarea id="rpAnswer" rows="4" placeholder="Type your response here..."></textarea>
+    <button class="btn btn-primary" style="margin-top:12px;" onclick="App.revealScenario('${id}')">Reveal Model Answer &amp; Coaching Tips</button>
+    ${revealed?`
+    <hr class="divider">
+    <h3>Recommended Response</h3>
+    <div class="dialogue"><div class="who">AGENT (Model Answer)</div><p style="margin:0;">${s.recommended}</p></div>
+    <h3>What to Avoid</h3><p class="muted">${s.avoid}</p>
+    <h3>Coaching Tips</h3><ul>${s.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    <div class="tip-box">${s.model}</div>
+    <button class="btn btn-outline btn-sm" onclick="App.nav('roleplay')">Try Another Scenario</button>
+    `:''}
+  </div>`;
+}
+App.revealScenario = function(id){ State.quizState['rp_'+id]=true; addPoints(5); render(); };
+
+/* ---------------- ASSESSMENTS ---------------- */
+function pageAssessmentList(){
+  const p = State.progress;
+  return `<div class="container section">
+    <span class="eyebrow-tag">Assessment Center</span>
+    <h2>Assessments</h2>
+    <div class="grid grid-3">
+      ${ASSESSMENTS.map(a=>{ const r=p&&p.assessments[a.id]; return `<div class="card">
+        <h3 style="font-size:1.05rem;">${a.title}</h3>
+        <p class="small muted">${a.desc}</p>
+        <p class="small muted">${a.q.length} questions · Pass: ${a.pass}%</p>
+        ${r?`<p class="small" style="color:${r.pct>=a.pass?'var(--teal)':'var(--coral)'};font-weight:600;">Last score: ${r.pct}%</p>`:''}
+        <button class="btn btn-primary btn-sm" onclick="App.nav('assessment',{id:'${a.id}'})">${r?'Retake':'Start'} Assessment</button>
+      </div>`;}).join('')}
+    </div>
+  </div>`;
+}
+function pageAssessmentRun(id){
+  const a = ASSESSMENTS.find(x=>x.id===id);
+  const key = 'as_'+id;
+  if(!State.quizState[key]) State.quizState[key] = {answers:new Array(a.q.length).fill(null), submitted:false};
+  const qs = State.quizState[key];
+  return `<div class="container section" style="max-width:760px;">
+    <p class="small muted"><a href="#" onclick="App.nav('assessments');return false;">Assessments</a> / ${a.title}</p>
+    <h2>${a.title}</h2>
+    <p class="muted">Passing score: ${a.pass}%</p>
+    ${qs.submitted?renderQuizResult(qs, {q:a.q, pass:a.pass}):''}
+    ${a.q.map((q,qi)=>renderQuizQuestion(key,qi,q,qs)).join('')}
+    ${!qs.submitted?`<button class="btn btn-primary" onclick="App.submitAssessment('${id}')">Submit Assessment</button>`:
+      `<button class="btn btn-outline" onclick="App.retakeAssessment('${id}')">Retake</button> <button class="btn btn-primary" onclick="App.nav('assessments')">Back to Assessments</button>`}
+  </div>`;
+}
+App.submitAssessment = async function(id){
+  const a = ASSESSMENTS.find(x=>x.id===id);
+  const key='as_'+id; const qs = State.quizState[key];
+  if(qs.answers.includes(null)){ toast('Please answer all questions first.'); return; }
+  qs.submitted = true;
+  const correct = qs.answers.filter((ans,i)=>ans===a.q[i].a).length;
+  const pct = Math.round(correct/a.q.length*100);
+  State.progress.assessments[id] = {pct, passed: pct>=a.pass, takenAt: Date.now()};
+  await addPoints(40);
+  await checkBadges();
+  await saveProgress();
+  render();
+};
+App.retakeAssessment = function(id){ delete State.quizState['as_'+id]; render(); };
+
+/* ---------------- INTERVIEW PREP ---------------- */
+function pageInterviewPrep(){
+  return `<div class="container section">
+    <span class="eyebrow-tag">Interview Preparation Center</span>
+    <h2>Get Ready for Your Final Interview</h2>
+    <div class="card" style="margin-bottom:24px;">
+      <h3>The STAR Method</h3>
+      <p class="muted">Use this structure to answer any situational or behavioral interview question clearly and confidently.</p>
+      <div class="grid grid-4">
+        ${[['S','Situation','Briefly describe the context.'],['T','Task','Explain what needed to be done.'],['A','Action','Describe the specific action you took.'],['R','Result','Share the positive outcome.']].map(([l,t,d])=>
+          `<div class="card" style="background:var(--paper-dim);box-shadow:none;"><h3 style="margin-bottom:4px;">${l}</h3><p style="font-weight:600;margin-bottom:4px;">${t}</p><p class="small muted" style="margin-bottom:0;">${d}</p></div>`).join('')}
+      </div>
+    </div>
+    <div class="grid grid-2">
+      <button class="btn btn-primary btn-block" onclick="App.nav('qbank')">Browse Full Question Bank →</button>
+      <button class="btn btn-gold btn-block" onclick="App.nav('mockinterview')">Start Mock Interview →</button>
+    </div>
+    <hr class="divider">
+    <h3>Basic Questions to Review First</h3>
+    ${QBANK.filter(q=>q.cat==='HR Questions').slice(0,3).map(q=>renderQBankItem(q)).join('')}
+  </div>`;
+}
+function renderQBankItem(item){
+  return `<div class="card" style="margin-bottom:14px;">
+    <span class="tag">${item.cat}</span>
+    <h3 style="font-size:1.02rem;">${item.q}</h3>
+    <p class="small"><strong>What the interviewer is looking for:</strong> ${item.look}</p>
+    <p class="small"><strong>Recommended structure:</strong> ${item.structure}</p>
+    <p class="small"><strong>Sample answer:</strong> <span class="muted">${item.sample}</span></p>
+    <p class="small"><strong>Common mistake:</strong> ${item.mistakes}</p>
+    <p class="small" style="margin-bottom:0;"><strong>Coaching tip:</strong> ${item.tip}</p>
+  </div>`;
+}
+
+/* ---------------- QUESTION BANK ---------------- */
+function pageQuestionBank(){
+  const cats = [...new Set(QBANK.map(q=>q.cat))];
+  return `<div class="container section">
+    <span class="eyebrow-tag">Question Bank</span>
+    <h2>Interview Question Bank</h2>
+    <div class="searchbox-page" style="margin-bottom:20px;">
+      <input type="text" id="qbSearch" placeholder="Search questions or categories..." oninput="filterQBank(this.value)">
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;" id="qbCats">
+      <button class="btn btn-outline btn-sm" onclick="filterQBankCat('all')">All</button>
+      ${cats.map(c=>`<button class="btn btn-outline btn-sm" onclick="filterQBankCat('${c}')">${c}</button>`).join('')}
+    </div>
+    <div id="qbResults">${QBANK.map(q=>renderQBankItem(q)).join('')}</div>
+  </div>`;
+}
+function filterQBank(val){
+  const v = val.toLowerCase();
+  const filtered = QBANK.filter(q=>q.q.toLowerCase().includes(v)||q.cat.toLowerCase().includes(v));
+  document.getElementById('qbResults').innerHTML = filtered.length? filtered.map(q=>renderQBankItem(q)).join('') : `<p class="empty">No questions matched your search.</p>`;
+}
+function filterQBankCat(cat){
+  const filtered = cat==='all'?QBANK:QBANK.filter(q=>q.cat===cat);
+  document.getElementById('qbResults').innerHTML = filtered.map(q=>renderQBankItem(q)).join('');
+}
+
+/* ---------------- MOCK INTERVIEW ---------------- */
+function pageMockInterview(){
+  const st = State.quizState.mock || (State.quizState.mock = {step:0, answers:[], done:false});
+  if(st.done) return renderMockResult();
+  if(st.step>=MOCK_QUESTIONS.length){ return finishMock(); }
+  const q = MOCK_QUESTIONS[st.step];
+  return `<div class="container section" style="max-width:680px;">
+    <span class="eyebrow-tag">Mock Final Interview</span>
+    <p class="muted">Question ${st.step+1} of ${MOCK_QUESTIONS.length}</p>
+    <div class="card">
+      <p class="small" style="font-weight:700;color:var(--teal);">INTERVIEWER</p>
+      <h2>${q.q}</h2>
+      <textarea id="mockAnswer" rows="6" placeholder="Type your answer as if you were speaking to a real interviewer...">${st.answers[st.step]?st.answers[st.step].text:''}</textarea>
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="App.mockNext()">${st.step===MOCK_QUESTIONS.length-1?'Finish Interview':'Next Question →'}</button>
+    </div>
+  </div>`;
+}
+function scoreMockAnswer(text, kw){
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  const lower = text.toLowerCase();
+  const fillers = ['um','uh','like,','you know','basically','actually','kind of','sort of'];
+  let fillerCount = fillers.reduce((s,f)=>s + (lower.split(f).length-1), 0);
+  const hedges = ['maybe','i guess','not sure','probably','i don\'t know'];
+  let hedgeCount = hedges.reduce((s,f)=>s + (lower.split(f).length-1), 0);
+  const kwHits = kw.filter(k=>lower.includes(k)).length;
+  const relevance = Math.min(10, Math.round((kwHits/kw.length)*10) + (words.length>8?2:0));
+  let clarity = words.length<8?4:(words.length<15?6:(words.length<90?9:6));
+  let confidence = Math.max(2, 9 - hedgeCount*2);
+  let professionalism = Math.max(2, 9 - fillerCount*2);
+  const hasStarWords = ['situation','task','action','result','because','so that'].some(w=>lower.includes(w));
+  let structure = words.length<8?3:(hasStarWords?9:6);
+  let grammar = 7;
+  if(text.trim().length>0){
+    if(!/[.?!]$/.test(text.trim())) grammar -= 1;
+    if(!/^[A-Z]/.test(text.trim())) grammar -= 1;
+    if(words.length>5) grammar += 1;
+  } else { grammar = 0; clarity=0; confidence=0; professionalism=0; structure=0; }
+  const clamp = n=>Math.max(0,Math.min(10,Math.round(n)));
+  return { grammar:clamp(grammar), clarity:clamp(clarity), confidence:clamp(confidence), relevance:clamp(relevance), professionalism:clamp(professionalism), structure:clamp(structure) };
+}
+App.mockNext = function(){
+  const st = State.quizState.mock;
+  const text = document.getElementById('mockAnswer').value;
+  const q = MOCK_QUESTIONS[st.step];
+  const scores = scoreMockAnswer(text, q.kw);
+  st.answers[st.step] = {text, scores};
+  st.step++;
+  render();
+};
+async function finishMock(){
+  const st = State.quizState.mock;
+  const dims = ['grammar','clarity','confidence','relevance','professionalism','structure'];
+  const avgByDim = {};
+  dims.forEach(d=>{ avgByDim[d] = Math.round(st.answers.reduce((s,a)=>s+a.scores[d],0)/st.answers.length*10)/10; });
+  const overall = Math.round(dims.reduce((s,d)=>s+avgByDim[d],0)/dims.length*10);
+  st.done = true; st.avgByDim = avgByDim; st.overall = overall;
+  State.progress.mockInterview = {overall, dims:avgByDim, takenAt:Date.now()};
+  await addPoints(50);
+  await checkBadges();
+  await saveProgress();
+  return renderMockResult();
+}
+function renderMockResult(){
+  const st = State.quizState.mock;
+  const dims = [['grammar','Grammar'],['clarity','Clarity'],['confidence','Confidence'],['relevance','Content / Relevance'],['professionalism','Professionalism'],['structure','Structure']];
+  const recs = [];
+  if(st.avgByDim.grammar<7) recs.push('Review Course 3: English Proficiency to strengthen grammar and sentence construction.');
+  if(st.avgByDim.confidence<7) recs.push('Practice speaking your answers out loud daily, and revisit Course 2: Communication Skills.');
+  if(st.avgByDim.structure<7) recs.push('Use the STAR method for situational and behavioral questions — review Interview Prep.');
+  if(st.avgByDim.professionalism<7) recs.push('Watch for filler words like "um" and "like" — replace them with a short pause.');
+  if(st.avgByDim.relevance<7) recs.push('Make sure your answer directly addresses the question asked, with specific details.');
+  if(recs.length===0) recs.push('Great work overall — keep practicing to stay sharp before your real interview.');
+  return `<div class="container section" style="max-width:700px;">
+    <h2>Final Interview Readiness Score</h2>
+    <div class="card center" style="margin-bottom:20px;">
+      <div class="readiness-ring" style="margin:0 auto 14px;background:${st.overall>=70?'var(--teal-soft)':'var(--coral-soft)'};color:${st.overall>=70?'var(--teal)':'var(--coral)'};">${st.overall}%</div>
+      <p class="muted">Overall Readiness</p>
+    </div>
+    <div class="card">
+      ${dims.map(([k,l])=>`<div class="pbar-row"><div class="pbar-label"><span>${l}</span><span>${st.avgByDim[k]}/10</span></div><div class="pbar-track"><div class="pbar-fill" style="width:${st.avgByDim[k]*10}%"></div></div></div>`).join('')}
+    </div>
+    <h3 style="margin-top:24px;">Personalized Recommendations</h3>
+    <ul>${recs.map(r=>`<li>${r}</li>`).join('')}</ul>
+    <p class="small muted">Note: this score is an automated practice estimate based on your typed answers, meant to help you improve — it is not a substitute for real interview feedback.</p>
+    <button class="btn btn-primary" onclick="App.retakeMock()">Retake Mock Interview</button>
+  </div>`;
+}
+App.retakeMock = function(){ State.quizState.mock = {step:0, answers:[], done:false}; render(); };
+
+/* ---------------- RESUME PREP ---------------- */
+function pageResume(){
+  const p = State.progress;
+  const items = [
+    'Keep it to one page.','Use a simple, readable font.','List your contact info at the top (phone, email).',
+    'Highlight communication, customer service, or teamwork experience — even from school or part-time work.',
+    'Include relevant training, like this academy\'s courses.','Proofread carefully for spelling and grammar.',
+    'Avoid unnecessary personal details (age, religion, marital status are not required in most applications).',
+    'Use a professional email address.'
+  ];
+  return `<div class="container section">
+    <span class="eyebrow-tag">Resume &amp; Application Preparation</span>
+    <h2>Prepare a BPO-Friendly Resume</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Resume Basics</h3>
+        <p>Your resume should be short, clear, and focused on communication, reliability, and any relevant skills — you don't need call center experience to apply.</p>
+        <h3>What to Include</h3>
+        <ul><li>Contact information</li><li>A short summary of your goal</li><li>Education</li><li>Work or volunteer experience (even informal)</li><li>Skills (communication, computer literacy, customer service)</li><li>Relevant training or certificates</li></ul>
+        <h3>What Not to Include</h3>
+        <ul><li>Irrelevant personal details</li><li>Long paragraphs with no structure</li><li>Spelling or grammar errors</li><li>A photo unless specifically requested</li></ul>
+        <h3>Common Resume Mistakes</h3>
+        <ul><li>Making it too long (more than 1-2 pages)</li><li>Using an unprofessional email address</li><li>Listing duties instead of achievements</li><li>Forgetting to proofread</li></ul>
+        <h3>Application Tips</h3>
+        <p>Apply to multiple companies, follow instructions exactly, and prepare your requirements (valid ID, resume, NBI clearance if required) ahead of time so you can move quickly when invited to interview.</p>
+      </div>
+      <div class="card">
+        <h3>Resume Checklist</h3>
+        ${items.map((it,i)=>{ const key='resume_'+i; const checked = p && p.resumeChecklist[key]; return `
+        <label style="display:flex;align-items:flex-start;gap:10px;font-weight:400;margin-bottom:10px;">
+          <input type="checkbox" ${checked?'checked':''} onchange="App.toggleResumeItem('${key}')" style="width:auto;margin-top:3px;">
+          <span>${it}</span>
+        </label>`;}).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+App.toggleResumeItem = async function(key){
+  if(!State.progress) return;
+  const was = !!State.progress.resumeChecklist[key];
+  State.progress.resumeChecklist[key] = !was;
+  if(!was) await addPoints(5);
+  await saveProgress();
+  render();
+};
+
+/* ---------------- VOCABULARY ---------------- */
+function pageVocabulary(){
+  return `<div class="container section">
+    <span class="eyebrow-tag">Call Center Vocabulary</span>
+    <h2>Glossary of BPO Terms</h2>
+    <div class="searchbox-page" style="margin-bottom:20px;">
+      <input type="text" id="vocSearch" placeholder="Search a term..." oninput="filterVocab(this.value)">
+    </div>
+    <div id="vocResults">${VOCAB.map(renderVocabCard).join('')}</div>
+  </div>`;
+}
+function renderVocabCard(v){
+  return `<div class="vocab-card"><span class="vocab-term">${v.term}</span> — <strong>${v.def}</strong><p class="small muted" style="margin:6px 0 0;">${v.ex}</p></div>`;
+}
+function filterVocab(val){
+  const v = val.toLowerCase();
+  const filtered = VOCAB.filter(x=>x.term.toLowerCase().includes(v)||x.def.toLowerCase().includes(v));
+  document.getElementById('vocResults').innerHTML = filtered.length?filtered.map(renderVocabCard).join(''):`<p class="empty">No terms matched your search.</p>`;
+}
+
+/* ---------------- PROGRESS PAGE ---------------- */
+function pageProgress(){
+  const p = State.progress;
+  const lvl = levelInfo(p.points);
+  return `<div class="container section">
+    <h2>Full Progress Report</h2>
+    <p class="muted">Level: <strong>${lvl.name}</strong> · ${p.points} total points</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Courses</h3>
+        ${COURSES.map(c=>{const pct=courseProgressPct(c,p); const qz=p.courseQuiz[c.id];
+        return `<div class="pbar-row"><div class="pbar-label"><span>${c.title}</span><span>${pct}% ${qz?(qz.passed?'· Quiz Passed':'· Quiz: '+qz.pct+'%'):''}</span></div><div class="pbar-track"><div class="pbar-fill" style="width:${pct}%"></div></div></div>`;}).join('')}
+      </div>
+      <div class="card">
+        <h3>Assessments</h3>
+        ${ASSESSMENTS.map(a=>{const r=p.assessments[a.id]; return `<div class="pbar-row"><div class="pbar-label"><span>${a.title}</span><span>${r?r.pct+'%':'—'}</span></div><div class="pbar-track"><div class="pbar-fill gold" style="width:${r?r.pct:0}%"></div></div></div>`;}).join('')}
+        <h3 style="margin-top:20px;">Mock Interview</h3>
+        <p class="small">${p.mockInterview?('Overall: '+p.mockInterview.overall+'%'):'Not yet taken.'}</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px;">
+      <h3>Badges Earned</h3>
+      <div class="badge-row">${Object.entries(BADGES).map(([id,b])=>`<div class="badge-chip ${p.badges.includes(id)?'':'locked'}">${b.icon} ${b.label}</div>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+/* ---------------- CERTIFICATE ---------------- */
+function pageCertificate(){
+  const p = State.progress;
+  const coursesDone = COURSES.every(c=>courseProgressPct(c,p)===100);
+  const finalAsmt = p.assessments['a5'];
+  const eligible = coursesDone && finalAsmt;
+  if(!eligible){
+    return `<div class="container section center">
+      <h2>Certificate of Completion</h2>
+      <p class="muted">Complete all 6 courses and the Final Readiness Assessment to unlock your certificate.</p>
+      <div class="grid grid-2" style="max-width:520px;margin:20px auto 0;text-align:left;">
+        <p class="small">${coursesDone?'✅':'⬜'} All 6 courses completed</p>
+        <p class="small">${finalAsmt?'✅':'⬜'} Final Readiness Assessment taken</p>
+      </div>
+      <button class="btn btn-primary" onclick="App.nav('courses')">Continue Courses</button>
+    </div>`;
+  }
+  const certNo = 'CCTA-'+(p.email.length*97+p.points)+'-'+new Date().getFullYear();
+  const dateStr = new Date().toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
+  return `<div class="container section" style="max-width:800px;">
+    <div class="certificate">
+      <h1>CALL CENTER TRAINING ACADEMY</h1>
+      <p class="small muted" style="letter-spacing:.05em;">CERTIFICATE OF COMPLETION</p>
+      <p style="margin-top:24px;">This certifies that</p>
+      <p class="name">${escapeHtml(p.name)}</p>
+      <p>has successfully completed the Call Center Training Program, including all six core courses and the Final Readiness Assessment.</p>
+      <div class="grid grid-3" style="margin-top:28px;text-align:left;">
+        <p class="small">Completion Date:<br><strong>${dateStr}</strong></p>
+        <p class="small">Final Assessment Score:<br><strong>${finalAsmt.pct}%</strong></p>
+        <p class="small">Certificate No.:<br><strong>${certNo}</strong></p>
+      </div>
+      <div class="grid grid-2" style="margin-top:32px;text-align:left;">
+        <p class="small">Trainer / Instructor:<br><strong>Academy Training Team</strong></p>
+        <p class="small">Signature:<br><strong style="font-family:'Space Grotesk',sans-serif;">_______________________</strong></p>
+      </div>
+      <p class="small muted" style="margin-top:28px;">This is a training completion certificate. It is not a professional license and does not guarantee employment.</p>
+    </div>
+    <div class="center no-print" style="margin-top:20px;">
+      <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------- READINESS ---------------- */
+function pageReadiness(){
+  const r = computeReadiness();
+  const status = r.pct>=85?['🟢','READY TO APPLY']:r.pct>=60?['🟡','ALMOST READY']:['🔴','KEEP TRAINING'];
+  const weakLessonLinks = {
+    'English Proficiency':'c3','Customer Service':'c4','Call Handling':'c5','Situational Judgment':'c6','Mock Interview':null,'Course Completion':null
+  };
+  return `<div class="container section" style="max-width:760px;">
+    <span class="eyebrow-tag">Final Readiness Check</span>
+    <h2>AM I READY FOR A CALL CENTER JOB?</h2>
+    <div class="card center" style="margin-bottom:24px;">
+      <div class="readiness-ring" style="margin:0 auto 14px;background:${r.pct>=60?'var(--teal-soft)':'var(--coral-soft)'};color:${r.pct>=60?'var(--teal)':'var(--coral)'};">${r.pct}%</div>
+      <h3 style="margin-bottom:4px;">CALL CENTER READINESS: ${r.pct}%</h3>
+      <p style="font-weight:700;">${status[0]} ${status[1]}</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Your Strengths</h3>
+        ${r.strengths.length?`<ul>${r.strengths.map(s=>`<li>${s}</li>`).join('')}</ul>`:`<p class="empty">Complete more courses and assessments to reveal your strengths.</p>`}
+      </div>
+      <div class="card">
+        <h3>Areas to Improve</h3>
+        ${r.weaknesses.length?`<ul>${r.weaknesses.map(s=>`<li>${s} ${weakLessonLinks[s]?`— <a href="#" onclick="App.nav('course',{id:'${weakLessonLinks[s]}',lesson:0});return false;">review lessons</a>`:''}</li>`).join('')}</ul>`:`<p class="small">Great work — no major weak areas detected!</p>`}
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px;">
+      <h3>Score Breakdown</h3>
+      ${r.breakdown.map(a=>`<div class="pbar-row"><div class="pbar-label"><span>${a.name}</span><span>${a.val}%</span></div><div class="pbar-track"><div class="pbar-fill" style="width:${a.val}%"></div></div></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* ---------------- ADMIN / TRAINER ---------------- */
+function pageAdmin(){
+  return renderAdminAsync();
+}
+async function renderAdminAsync(){
+  const isTrainer = State.trainer;
+  if(!isTrainer){
+    return `<div class="container section" style="max-width:420px;">
+      <h2>Trainer Login</h2>
+      <p class="muted small">For trainers managing this academy. Enter the trainer access code to view student progress and post announcements.</p>
+      <div class="card">
+        <div class="field"><label>Trainer Name</label><input type="text" id="trName"></div>
+        <div class="field"><label>Access Code</label><input type="password" id="trCode"></div>
+        <button class="btn btn-primary btn-block" onclick="App.trainerLogin()">Enter Trainer Dashboard</button>
+        <p class="small muted" style="margin-top:10px;">Demo access code: TRAINER2024</p>
+      </div>
+    </div>`;
+  }
+  const userKeys = await sList('user_', true);
+  const students = [];
+  for(const k of userKeys){
+    const prog = await sGet('progress_'+k.slice(5), true);
+    if(prog) students.push(prog);
+  }
+  const anns = await sGet('announcements', true) || [];
+  return `<div class="container section">
+    <h2>Trainer Dashboard</h2>
+    <p class="muted small">Note: this is a shared demo view — student data here is visible to anyone using the trainer login on this platform.</p>
+    <div class="card" style="margin-bottom:20px;">
+      <h3>Post an Announcement</h3>
+      <textarea id="annText" rows="2" placeholder="e.g. New scenario added to Role-Play this week!"></textarea>
+      <button class="btn btn-primary btn-sm" style="margin-top:10px;" onclick="App.postAnnouncement()">Post to Home Page</button>
+      ${anns.length?`<p class="small muted" style="margin-top:10px;">Latest: "${escapeHtml(anns[anns.length-1].text)}"</p>`:''}
+    </div>
+    <div class="card">
+      <h3>Students (${students.length})</h3>
+      ${students.length?students.map(s=>`<div class="vocab-card">
+        <strong>${escapeHtml(s.name)}</strong> <span class="small muted">${s.email}</span><br>
+        <span class="small">Overall course completion: ${overallCoursePctFor(s)}% · Points: ${s.points} · Mock Interview: ${s.mockInterview?s.mockInterview.overall+'%':'—'}</span>
+      </div>`).join(''):`<p class="empty">No students registered yet.</p>`}
+    </div>
+  </div>`;
+}
+function overallCoursePctFor(prog){
+  const t = totalLessons(); let d=0;
+  COURSES.forEach(c=>c.lessons.forEach((l,i)=>{ if(prog.lessonsDone[c.id+'_'+i]) d++; }));
+  return Math.round(d/t*100);
+}
+App.trainerLogin = function(){
+  const code = document.getElementById('trCode').value;
+  if(code!=='TRAINER2024'){ toast('Incorrect access code.'); return; }
+  State.trainer = true;
+  render();
+};
+App.postAnnouncement = async function(){
+  const text = document.getElementById('annText').value.trim();
+  if(!text) return;
+  const anns = await sGet('announcements', true) || [];
+  anns.push({text, at:Date.now()});
+  await sSet('announcements', anns.slice(-5), true);
+  toast('Announcement posted.');
+  render();
+};
+
+/* ---------------- SEARCH ---------------- */
+function pageSearch(q){
+  const query = (q||'').toLowerCase().trim();
+  if(!query) return `<div class="container section"><p class="empty">Type something in the search bar to look across courses, vocabulary, and interview questions.</p></div>`;
+  const lessonHits = [];
+  COURSES.forEach(c=>c.lessons.forEach((l,i)=>{ if(l.t.toLowerCase().includes(query)||l.c.toLowerCase().includes(query)) lessonHits.push({c,i,l}); }));
+  const vocabHits = VOCAB.filter(v=>v.term.toLowerCase().includes(query)||v.def.toLowerCase().includes(query));
+  const qbHits = QBANK.filter(item=>item.q.toLowerCase().includes(query)||item.cat.toLowerCase().includes(query));
+  const asmtHits = ASSESSMENTS.filter(a=>a.title.toLowerCase().includes(query));
+  const scenHits = SCENARIOS.filter(s=>s.title.toLowerCase().includes(query));
+  const total = lessonHits.length+vocabHits.length+qbHits.length+asmtHits.length+scenHits.length;
+  return `<div class="container section">
+    <h2>Search results for "${escapeHtml(q)}"</h2>
+    ${total===0?`<p class="empty">No matches found. Try a different word.</p>`:''}
+    ${lessonHits.length?`<h3>Lessons</h3>${lessonHits.map(h=>`<div class="vocab-card"><a href="#" onclick="App.nav('course',{id:'${h.c.id}',lesson:${h.i}});return false;"><strong>${h.l.t}</strong></a> <span class="small muted">— ${h.c.title}</span></div>`).join('')}`:''}
+    ${scenHits.length?`<h3>Role-Play Scenarios</h3>${scenHits.map(s=>`<div class="vocab-card"><a href="#" onclick="App.nav('roleplayrun',{id:'${s.id}'});return false;"><strong>${s.title}</strong></a></div>`).join('')}`:''}
+    ${asmtHits.length?`<h3>Assessments</h3>${asmtHits.map(a=>`<div class="vocab-card"><a href="#" onclick="App.nav('assessment',{id:'${a.id}'});return false;"><strong>${a.title}</strong></a></div>`).join('')}`:''}
+    ${qbHits.length?`<h3>Interview Questions</h3>${qbHits.map(item=>`<div class="vocab-card"><a href="#" onclick="App.nav('qbank');return false;"><strong>${item.q}</strong></a> <span class="small muted">— ${item.cat}</span></div>`).join('')}`:''}
+    ${vocabHits.length?`<h3>Vocabulary</h3>${vocabHits.map(renderVocabCard).join('')}`:''}
+  </div>`;
+}
+
+/* =====================================================================
+   INIT
+===================================================================== */
+async function init(){
+  const session = await sGet('session', false);
+  if(session && session.email){
+    const u = await sGet('user_'+session.email, true);
+    const prog = await sGet('progress_'+session.email, true);
+    if(u && prog){ State.user = {name:u.name, email:u.email}; State.progress = prog; }
+  }
+  render();
+}
+init();
+</script>
+</body>
+</html>
