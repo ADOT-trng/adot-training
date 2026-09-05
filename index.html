@@ -810,6 +810,7 @@ App.doLogin = async function(){
   if(!prog){ prog = emptyProgress(u.name,email); await sSet('progress_'+email, prog, true); }
   await sSet('session', {email}, false);
   State.user = {name:u.name, email}; State.progress = prog;
+  
   toast('Welcome back, '+u.name+'!');
   App.nav('dashboard');
 };
