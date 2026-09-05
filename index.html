@@ -1523,9 +1523,73 @@ function pageSearch(q){
 }
 
 /* =====================================================================
+   SUPABASE COURSE + LESSON LOADER
+===================================================================== */
+async function loadCoursesFromSupabase(){
+  try{
+    const { data: dbCourses, error: courseError } =
+      await adotSupabase
+        .from('courses')
+        .select('*')
+        .order('id');
+
+    if(courseError) throw courseError;
+
+    const { data: dbLessons, error: lessonError } =
+      await adotSupabase
+        .from('lessons')
+        .select('*')
+        .order('course_id')
+        .order('lesson_order');
+
+    if(lessonError) throw lessonError;
+
+    if(!dbCourses || !dbCourses.length) return;
+
+    const oldCourses = [...COURSES];
+
+    COURSES.length = 0;
+
+    dbCourses.forEach((dbCourse, index) => {
+      const lessons = (dbLessons || [])
+        .filter(l => l.course_id === dbCourse.id)
+        .sort((a,b) => a.lesson_order - b.lesson_order)
+        .map(l => ({
+          t: l.title,
+          c: l.content
+        }));
+
+      COURSES.push({
+        id: 'c' + dbCourse.id,
+        title: dbCourse.title,
+        blurb: dbCourse.description || '',
+        level: dbCourse.difficulty || 'Beginner',
+        accessLevel: dbCourse.access_level || 'free',
+        lessons: lessons,
+        quiz: oldCourses[index]?.quiz || {
+          q: [],
+          pass: 70
+        }
+      });
+    });
+
+    console.log(
+      'ADOT: Loaded ' + COURSES.length +
+      ' courses and ' + (dbLessons || []).length +
+      ' lessons from Supabase.'
+    );
+
+  }catch(error){
+    console.error('ADOT Supabase course loading failed:', error);
+    console.log('ADOT: Using existing course data as fallback.');
+  }
+}
+  /* =====================================================================
    INIT
 ===================================================================== */
 async function init(){
+  await loadCoursesFromSupabase();
+
   const session = await sGet('session', false);
   if(session && session.email){
     const u = await sGet('user_'+session.email, true);
