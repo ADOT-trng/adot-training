@@ -1911,24 +1911,122 @@ App.postAnnouncement = async function(){
 /* ---------------- SEARCH ---------------- */
 function pageSearch(q){
   const query = (q||'').toLowerCase().trim();
-  if(!query) return `<div class="container section"><p class="empty">Type something in the search bar to look across courses, vocabulary, and interview questions.</p></div>`;
+
+  if(!query){
+    return `<div class="container section">
+      <p class="empty">Type something in the search bar to look across courses, vocabulary, and interview questions.</p>
+    </div>`;
+  }
+
   const lessonHits = [];
-  COURSES.forEach(c=>c.lessons.forEach((l,i)=>{ if(l.t.toLowerCase().includes(query)||l.c.toLowerCase().includes(query)) lessonHits.push({c,i,l}); }));
-  const vocabHits = VOCAB.filter(v=>v.term.toLowerCase().includes(query)||v.def.toLowerCase().includes(query));
-  const qbHits = QBANK.filter(item=>item.q.toLowerCase().includes(query)||item.cat.toLowerCase().includes(query));
-  const asmtHits = ASSESSMENTS.filter(a=>a.title.toLowerCase().includes(query));
-  const scenHits = SCENARIOS.filter(s=>s.title.toLowerCase().includes(query));
-  const total = lessonHits.length+vocabHits.length+qbHits.length+asmtHits.length+scenHits.length;
+
+  COURSES.forEach(c=>{
+    c.lessons.forEach((l,i)=>{
+      if(
+        l.t.toLowerCase().includes(query) ||
+        l.c.toLowerCase().includes(query)
+      ){
+        lessonHits.push({c,i,l});
+      }
+    });
+  });
+
+  const vocabHits = VOCAB.filter(v=>
+    v.term.toLowerCase().includes(query) ||
+    v.def.toLowerCase().includes(query)
+  );
+
+  const qbHits = QBANK.filter(item=>
+    item.q.toLowerCase().includes(query) ||
+    item.cat.toLowerCase().includes(query)
+  );
+
+  const asmtHits = ASSESSMENTS.filter(a=>
+    a.title.toLowerCase().includes(query)
+  );
+
+  const scenHits = SCENARIOS.filter(s=>
+    s.title.toLowerCase().includes(query)
+  );
+
+  const total =
+    lessonHits.length +
+    vocabHits.length +
+    qbHits.length +
+    asmtHits.length +
+    scenHits.length;
+
   return `<div class="container section">
+
     <h2>Search results for "${escapeHtml(q)}"</h2>
-    ${total===0?`<p class="empty">No matches found. Try a different word.</p>`:''}
-    ${lessonHits.length?`<h3>Lessons</h3>${lessonHits.map(h=>`<div class="vocab-card"><a href="#" onclick="App.nav('course',{id:'${h.c.id}',lesson:${h.i}});return false;"><strong>${h.l.t}</strong></a> <span class="small muted">— ${h.c.title}</span></div>`).join('')}`:''}
-    ${scenHits.length?`<h3>Role-Play Scenarios</h3>${scenHits.map(s=>`<div class="vocab-card"><a href="#" onclick="App.nav('roleplayrun',{id:'${s.id}'});return false;"><strong>${s.title}</strong></a></div>`).join('')}`:''}
-    ${asmtHits.length?`<h3>Assessments</h3>${asmtHits.map(a=>`<div class="vocab-card"><a href="#" onclick="App.nav('assessment',{id:'${a.id}'});return false;"><strong>${a.title}</strong></a></div>`).join('')}`:''}
-    ${qbHits.length?`<h3>Interview Questions</h3>${qbHits.map(item=>`<div class="vocab-card"><a href="#" onclick="App.nav('qbank');return false;"><strong>${item.q}</strong></a> <span class="small muted">— ${item.cat}</span></div>`).join('')}`:''}
-    ${vocabHits.length?`<h3>Vocabulary</h3>${vocabHits.map(renderVocabCard).join('')}`:''}
+
+    ${total===0
+      ? `<p class="empty">No matches found. Try a different word.</p>`
+      : ''
+    }
+
+    ${lessonHits.length
+      ? `<h3>Lessons</h3>
+         ${lessonHits.map(h=>`
+           <div class="vocab-card">
+             <a href="#"
+               onclick="App.nav('course',{id:'${h.c.id}',lesson:${h.i}});return false;">
+               <strong>${escapeHtml(h.l.t)}</strong>
+             </a>
+           </div>
+         `).join('')}`
+      : ''
+    }
+
+    ${scenHits.length
+      ? `<h3>Role-Play Scenarios</h3>
+         ${scenHits.map(s=>`
+           <div class="vocab-card">
+             <a href="#"
+               onclick="App.nav('roleplay',{id:'${s.id}'});return false;">
+               <strong>${escapeHtml(s.title)}</strong>
+             </a>
+           </div>
+         `).join('')}`
+      : ''
+    }
+
+    ${asmtHits.length
+      ? `<h3>Assessments</h3>
+         ${asmtHits.map(a=>`
+           <div class="vocab-card">
+             <a href="#"
+               onclick="App.nav('assessment',{id:'${a.id}'});return false;">
+               <strong>${escapeHtml(a.title)}</strong>
+             </a>
+           </div>
+         `).join('')}`
+      : ''
+    }
+
+    ${qbHits.length
+      ? `<h3>Interview Questions</h3>
+         ${qbHits.map(item=>`
+           <div class="vocab-card">
+             <a href="#"
+               onclick="App.nav('qbank');return false;">
+               <strong>${escapeHtml(item.q)}</strong>
+               <span class="small">${escapeHtml(item.cat)}</span>
+             </a>
+           </div>
+         `).join('')}`
+      : ''
+    }
+
+    ${vocabHits.length
+      ? `<h3>Vocabulary</h3>
+         ${vocabHits.map(v=>renderVocabCard(v)).join('')}`
+      : ''
+    }
+
   </div>`;
 }
+
 
 /* =====================================================================
    SUPABASE COURSE + LESSON LOADER
