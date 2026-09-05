@@ -593,7 +593,7 @@ function renderTopNav(){
     ['home','Home'],['courses','Courses'],['assessments','Assessments'],
     ['interviewprep','Interview Prep'],['vocabulary','Vocabulary'],['readiness','Am I Ready?']
   ];
-  document.getElementById('navlinks').innerHTML = links.map(([r,l])=>
+  document.getElementById('navlinks').innerHTML = links.map(r=>
     `<button class="${State.route===r?'active':''}" onclick="App.nav('${r}')">${l}</button>`).join('');
   const actions = document.getElementById('navActions');
   if(State.user){
