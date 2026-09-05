@@ -1735,6 +1735,10 @@ function pageAdmin(){
   return renderAdminAsync();
 }
 async function renderAdminAsync(){
+const isAdmin = State.user?.role === 'admin';
+const isTrainer = State.trainer;
+
+if(!isAdmin && !isTrainer){
   const isTrainer = State.trainer;
   if(!isTrainer){
     return `<div class="container section" style="max-width:420px;">
@@ -2125,7 +2129,8 @@ init();
         name: profile.first_name + ' ' + profile.last_name,
         email: user.email,
         id: user.id,
-        plan: profile.plan
+        plan: profile.plan,
+role: profile.role
       };
     }
 
