@@ -1755,6 +1755,7 @@ async function renderAdminAsync(){
   }
   const anns = await sGet('announcements', true) || [];
   return `<div class="container section">
+  ${await renderPendingPayments()}
     <h2>Trainer Dashboard</h2>
     <p class="muted small">Note: this is a shared demo view — student data here is visible to anyone using the trainer login on this platform.</p>
     <div class="card" style="margin-bottom:20px;">
@@ -1777,7 +1778,116 @@ function overallCoursePctFor(prog){
   COURSES.forEach(c=>c.lessons.forEach((l,i)=>{ if(prog.lessonsDone[c.id+'_'+i]) d++; }));
   return Math.round(d/t*100);
 }
-App.trainerLogin = function(){
+async function renderPendingPayments(){
+  const payments = await loadPendingPayments();
+
+  return `
+    <div class="card" style="margin-bottom:20px;">
+      <h3>💳 Pending Payments</h3>
+
+      <p class="small muted">
+        Review student payments before granting PLUS or PRO access.
+      </p>
+
+      <div id="adminPaymentMsg"
+        class="small"
+        style="margin:10px 0;">
+      </div>
+
+      ${
+        payments.length
+        ? payments.map(p => `
+          <div class="card"
+            style="margin-top:12px;border:1px solid #ddd;">
+
+            <strong>Payment #${p.id}</strong>
+
+            <p class="small">
+              Package:
+              <strong>${escapeHtml(String(p.package).toUpperCase())}</strong>
+            </p>
+
+            <p class="small">
+              Amount:
+              <strong>₱${Number(p.amount).toFixed(2)}</strong>
+            </p>
+
+            <p class="small">
+              Payment Method:
+              ${escapeHtml(p.payment_method || '-')}
+            </p>
+
+            <p class="small">
+              Reference:
+              <strong>${escapeHtml(p.reference_number || '-')}</strong>
+            </p>
+
+            <p class="small">
+              Proof:
+              ${escapeHtml(p.proof_file || '-')}
+            </p>
+
+            <div style="margin-top:12px;">
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="adminApprovePayment(${p.id}, true)">
+                Approve
+              </button>
+
+              <button
+                class="btn btn-sm"
+                style="margin-left:8px;"
+                onclick="adminApprovePayment(${p.id}, false)">
+                Reject
+              </button>
+            </div>
+
+          </div>
+        `).join('')
+        : `<p class="small muted">No pending payments.</p>`
+      }
+    </div>
+  `;
+}
+  async function loadPendingPayments(){
+  const { data, error } = await adotSupabase
+    .from('payments')
+    .select('*')
+    .eq('status', 'pending')
+    .order('id', { ascending: false });
+
+  if(error){
+    console.error('Pending payments error:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+window.adminApprovePayment = async function(paymentId, approve){
+  const msg = document.getElementById('adminPaymentMsg');
+
+  if(msg) msg.textContent = 'Processing...';
+
+  const { data, error } = await adotSupabase.rpc(
+    'approve_payment',
+    {
+      p_payment_id: paymentId,
+      p_approve: approve
+    }
+  );
+
+  if(error){
+    console.error(error);
+    if(msg) msg.textContent = error.message;
+    return;
+  }
+
+  if(msg) msg.textContent = data;
+
+  render();
+};
+  App.trainerLogin = function(){
   const code = document.getElementById('trCode').value;
   if(code!=='TRAINER2024'){ toast('Incorrect access code.'); return; }
   State.trainer = true;
