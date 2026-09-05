@@ -890,7 +890,7 @@ function pageCourseCatalog(){
 
     <div class="grid grid-3" style="margin-top:28px;">
       ${COURSES.map(c=>{
-        const pct = State.progress?.courseProgressPct(c,State.progress) || 0;
+        const pct = courseProgressPct(c,State.progress);
         const access = c.accessLevel || 'free';
         const isFree = access === 'free';
         const price = access === 'plus' ? '₱99' : access === 'pro' ? '₱199' : 'FREE';
@@ -927,27 +927,46 @@ function pageCourseCatalog(){
       }).join('')}
     </div>
   </div>`;
-}{
-  return `<div class="container section">
-    <span class="eyebrow-tag">Course Library</span>
-    <h2>All Courses</h2>
-    <div class="grid grid-3">
-      ${COURSES.map(c=>{ const pct = State.progress?courseProgressPct(c,State.progress):0; return `
-      <div class="card course-card">
-        <span class="tag">${c.level}</span>
-        <h3>${c.title}</h3>
-        <p class="small muted">${c.blurb}</p>
-        <p class="lesson-count">${c.lessons.length} lessons</p>
-        ${State.user?`<div class="pbar-track" style="margin:10px 0;"><div class="pbar-fill" style="width:${pct}%"></div></div><p class="small muted">${pct}% complete</p>`:''}
-        <button class="btn btn-primary btn-sm" style="margin-top:8px;" onclick="App.nav('course',{id:'${c.id}',lesson:0})">${pct>0?'Continue':'Start Course'}</button>
-      </div>`;}).join('')}
-    </div>
-  </div>`;
-}
+
 
 function pageCourseDetail(cid, lessonIdx){
   const c = COURSES.find(x=>x.id===cid);
   if(!c) return `<div class="container section"><p>Course not found.</p></div>`;
+    const plan = State.user?.plan || 'free';
+  const access = c.accessLevel || 'free';
+
+  const hasAccess =
+    access === 'free' ||
+    plan === 'pro' ||
+    (plan === 'plus' && access === 'plus');
+
+  if(!hasAccess){
+    const price = access === 'plus' ? '₱99' : '₱199';
+    const planName = access.toUpperCase();
+
+    return `<div class="container section">
+      <div class="card" style="max-width:650px;margin:40px auto;text-align:center;">
+        <div style="font-size:48px;">🔒</div>
+        <h2>${c.title}</h2>
+        <p class="muted">
+          This course is available with the ADOT ${planName} plan.
+        </p>
+        <p style="font-size:22px;font-weight:700;margin:20px 0;">
+          ${price}
+        </p>
+        <button class="btn btn-primary"
+          onclick="alert('ADOT ${planName} costs ${price}. Payment and course unlocking will be available soon.')">
+          Unlock for ${price}
+        </button>
+        <br>
+        <button class="btn btn-sm"
+          style="margin-top:12px;"
+          onclick="App.nav('courses')">
+          Back to Courses
+        </button>
+      </div>
+    </div>`;
+  }
   lessonIdx = Math.max(0, Math.min(lessonIdx, c.lessons.length-1));
   const lesson = c.lessons[lessonIdx];
   const p = State.progress;
