@@ -884,6 +884,53 @@ function pageCourseCatalog(){
   return `<div class="container section">
     <span class="eyebrow-tag">Course Library</span>
     <h2>All Courses</h2>
+    <p class="muted" style="max-width:65ch;">
+      Start with our free BPO courses, then unlock advanced training when you're ready.
+    </p>
+
+    <div class="grid grid-3" style="margin-top:28px;">
+      ${COURSES.map(c=>{
+        const pct = State.progress?.courseProgressPct(c,State.progress) || 0;
+        const access = c.accessLevel || 'free';
+        const isFree = access === 'free';
+        const price = access === 'plus' ? '₱99' : access === 'pro' ? '₱199' : 'FREE';
+        const planLabel = isFree ? 'FREE' : access.toUpperCase();
+
+        return `
+        <div class="card course-card">
+          <span class="tag">${planLabel}${isFree ? '' : ' · ' + price}</span>
+
+          <h3>${c.title}</h3>
+
+          <p class="small muted">${c.blurb}</p>
+
+          <p class="lesson-count">${c.lessons.length} lessons</p>
+
+          ${State.user ? `
+            <div class="pbar-track" style="margin:10px 0;">
+              <div class="pbar-fill" style="width:${pct}%"></div>
+            </div>
+            <p class="small muted">${pct}% complete</p>
+          ` : ''}
+
+          ${isFree
+            ? `<button class="btn btn-primary btn-sm" style="margin-top:8px;"
+                onclick="App.nav('course',{id:'${c.id}',lesson:0})">
+                ${pct>0 ? 'Continue' : 'Start Course'}
+              </button>`
+            : `<button class="btn btn-primary btn-sm" style="margin-top:8px;"
+                onclick="alert('This course is part of ADOT ${planLabel} and costs ${price}. Payment and unlocking will be available soon.')">
+                Unlock for ${price}
+              </button>`
+          }
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}{
+  return `<div class="container section">
+    <span class="eyebrow-tag">Course Library</span>
+    <h2>All Courses</h2>
     <div class="grid grid-3">
       ${COURSES.map(c=>{ const pct = State.progress?courseProgressPct(c,State.progress):0; return `
       <div class="card course-card">
