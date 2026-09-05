@@ -1675,3 +1675,96 @@ init();
 })();
 </script></body>
 </html>
+<!-- ADOT LOGIN PROGRESS FIX -->
+<script>
+(function () {
+
+  const originalLogin = App.doLogin;
+
+  App.doLogin = async function () {
+
+    const email = document.getElementById('liEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('liPass').value;
+    const msg = document.getElementById('authMsg');
+
+    if (!email || !pass) {
+      msg.textContent = 'Please enter your email and password.';
+      return;
+    }
+
+    const { data, error } =
+      await adotSupabase.auth.signInWithPassword({
+        email: email,
+        password: pass
+      });
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    const user = data.user;
+
+    let { data: profile, error: profileError } =
+      await adotSupabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if (profileError) {
+      msg.textContent = profileError.message;
+      return;
+    }
+
+    if (!profile) {
+
+      const saved = JSON.parse(
+        localStorage.getItem('adot_pending_profile') || '{}'
+      );
+
+      const { data: newProfile, error: insertError } =
+        await adotSupabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            first_name: saved.first_name || user.email.split('@')[0],
+            last_name: saved.last_name || '-',
+            role: 'student',
+            plan: 'free',
+            plan_status: 'active'
+          })
+          .select()
+          .single();
+
+      if (insertError) {
+        msg.textContent = insertError.message;
+        return;
+      }
+
+      profile = newProfile;
+      localStorage.removeItem('adot_pending_profile');
+    }
+
+    State.user = {
+      name: (profile.first_name + ' ' + profile.last_name).trim(),
+      email: user.email,
+      id: user.id,
+      plan: profile.plan
+    };
+
+    State.progress =
+      await sGet('progress_' + user.email, true);
+
+    if (!State.progress) {
+      State.progress = emptyProgress(
+        State.user.name,
+        State.user.email
+      );
+    }
+
+    App.nav('dashboard');
+  };
+
+})();
+</script>
