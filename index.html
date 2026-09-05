@@ -173,6 +173,17 @@ footer h4{color:#fff;font-size:.9rem;}
 .empty{color:var(--slate);font-style:italic;padding:20px 0;}
 @media print{.topbar,footer,.no-print{display:none!important;} body{background:#fff;}}
 </style>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const ADOT_SUPABASE_URL = "https://gpylmpzivzmrgbdrucnw.supabase.co";
+  const ADOT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_p-l_bhTYd1sfTt524DueKQ_EfL4NCys";
+
+  const adotSupabase = supabase.createClient(
+    ADOT_SUPABASE_URL,
+    ADOT_SUPABASE_PUBLISHABLE_KEY
+  );
+</script>
 </head>
 <body>
 <div class="topbar">
