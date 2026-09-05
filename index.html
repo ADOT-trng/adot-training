@@ -1536,5 +1536,142 @@ async function init(){
 }
 init();
 </script>
-</body>
+<!-- ADOT SUPABASE AUTH -->
+<script>
+(function () {
+
+  App.doRegister = async function () {
+    const name = document.getElementById('reName').value.trim();
+    const email = document.getElementById('reEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('rePass').value;
+    const msg = document.getElementById('authMsg');
+
+    if (!name || !email || !pass) {
+      msg.textContent = 'Please fill in all fields.';
+      return;
+    }
+
+    if (pass.length < 6) {
+      msg.textContent = 'Password must be at least 6 characters.';
+      return;
+    }
+
+    const { data, error } = await adotSupabase.auth.signUp({
+      email,
+      password: pass,
+      options: {
+        emailRedirectTo: 'https://adot-trng.github.io/adot-training/'
+      }
+    });
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    if (data.user) {
+      const parts = name.split(/\s+/);
+
+      localStorage.setItem(
+        'adot_pending_profile',
+        JSON.stringify({
+          id: data.user.id,
+          first_name: parts.shift() || name,
+          last_name: parts.join(' ') || '-'
+        })
+      );
+    }
+
+    msg.textContent =
+      'Account created! Please check your email and confirm your account before logging in.';
+  };
+
+
+  App.doLogin = async function () {
+    const email = document.getElementById('liEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('liPass').value;
+    const msg = document.getElementById('authMsg');
+
+    if (!email || !pass) {
+      msg.textContent = 'Please enter your email and password.';
+      return;
+    }
+
+    const { data, error } =
+      await adotSupabase.auth.signInWithPassword({
+        email,
+        password: pass
+      });
+
+    if (error) {
+      msg.textContent = error.message;
+      return;
+    }
+
+    const user = data.user;
+
+    const { data: profile } =
+      await adotSupabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if (!profile) {
+      const saved = JSON.parse(
+        localStorage.getItem('adot_pending_profile') || '{}'
+      );
+
+      const { data: newProfile, error: profileError } =
+        await adotSupabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            first_name: saved.first_name || user.email.split('@')[0],
+            last_name: saved.last_name || '-',
+            role: 'student',
+            plan: 'free',
+            plan_status: 'active'
+          })
+          .select()
+          .single();
+
+      if (profileError) {
+        msg.textContent = profileError.message;
+        return;
+      }
+
+      State.user = {
+        name: newProfile.first_name + ' ' + newProfile.last_name,
+        email: user.email,
+        id: user.id,
+        plan: newProfile.plan
+      };
+
+      localStorage.removeItem('adot_pending_profile');
+
+    } else {
+
+      State.user = {
+        name: profile.first_name + ' ' + profile.last_name,
+        email: user.email,
+        id: user.id,
+        plan: profile.plan
+      };
+    }
+
+    App.nav('dashboard');
+  };
+
+
+  App.logout = async function () {
+    await adotSupabase.auth.signOut();
+    State.user = null;
+    State.progress = null;
+    App.nav('home');
+  };
+
+
+})();
+</script></body>
 </html>
